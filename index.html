@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPEED Lab | 지능형 전력전자 연구실 · PKNU</title>
+<meta name="author" content="Prof. Jun-Hyung Jung">
+<meta name="description" content="지능형 전력전자 연구실 (Smart Power Electronics & Electric Drives Laboratory, SPEED Lab), 국립부경대학교 제어계측공학전공">
+<meta name="keywords" content="SPEED Lab, 지능형 전력전자 연구실, 정준형, Jun-Hyung Jung, 국립부경대학교, PKNU, 전력전자, 전동기 드라이브, Power Electronics, Motor Drives, Multilevel Converter, Reinforcement Learning">
+<meta property="og:title" content="SPEED Lab | PKNU">
+<meta property="og:description" content="Smart Power Electronics & Electric Drives Laboratory · 지능형 전력전자 연구실">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/research_overview.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2312303C'/%3E%3Cpath d='M4 22h5V10h5v12h5V10h5v12h4' fill='none' stroke='%23D9853F' stroke-width='2.4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3F2EE; --paper-2:#E9E8E2; --card:#FFFFFF; --ink:#15191C; --ink-70:#3A4248; --ink-50:#626A70;
+  --deep:#12303C; --deep-2:#0B2029; --copper:#B8612A; --copper-lt:#D9853F;
+  --line:#D6D5CD; --line-dark:#284753;
+  --sans:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --pad:clamp(16px,5vw,64px); --maxw:1160px;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.72;
+  -webkit-font-smoothing:antialiased;letter-spacing:-.005em;word-break:keep-all;overflow-wrap:break-word;min-height:100vh;display:flex;flex-direction:column}
+main{flex:1}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{margin:0;font-weight:700;letter-spacing:-.028em;line-height:1.28}
+p{margin:0}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
+.block{padding-block:clamp(44px,6vw,80px)}
+.block.tight{padding-top:0}
+.alt{background:var(--paper-2)}
+.rel{position:relative}
+.mono{font-family:var(--mono)}
+.muted{color:var(--ink-50)}
+
+/* ---------- top bar ---------- */
+header.bar{position:sticky;top:0;z-index:50;background:var(--deep-2);color:#E6ECEC;border-bottom:1px solid #06161C}
+.bar-in{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad);display:flex;align-items:center;gap:22px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:0 0 auto;color:#fff}
+.brand svg{width:26px;height:26px;flex:0 0 auto}
+.brand b{font-size:17px;letter-spacing:-.035em}
+.brand span{font-family:var(--mono);font-size:11px;color:#8FA7AF;letter-spacing:.04em}
+nav.main{margin-left:auto;display:flex;gap:clamp(12px,1.9vw,26px);overflow-x:auto;scrollbar-width:none}
+nav.main::-webkit-scrollbar{display:none}
+nav.main a{font-size:15px;font-weight:600;text-decoration:none;color:#C9D5D8;white-space:nowrap;padding:19px 0 17px;border-bottom:2px solid transparent;transition:color .15s}
+nav.main a:hover{color:#fff}
+nav.main a.on{color:#fff;border-bottom-color:var(--copper-lt)}
+.langbtn{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;background:none;border:1px solid #37535E;border-radius:2px;padding:5px 9px;cursor:pointer;color:#A9BCC2}
+.langbtn:hover{border-color:#fff;color:#fff}
+@media(max-width:960px){
+  .bar-in{height:auto;flex-wrap:wrap;padding-top:10px;gap:4px 12px}
+  nav.main{order:3;width:100%;margin-left:0;gap:18px}
+  nav.main a{padding:8px 0 10px}
+  .langbtn{margin-left:auto}
+}
+
+/* ---------- page heads ---------- */
+.page{display:none}
+.page.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.phead{background:var(--deep);color:#EEF2F2;padding-block:clamp(40px,6vw,68px) clamp(30px,4vw,44px);position:relative;overflow:hidden}
+.phead .k{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--copper-lt)}
+.phead h1{font-size:clamp(30px,5vw,46px);margin-top:8px;letter-spacing:-.04em}
+.phead p.s{margin-top:10px;color:#A9BCC2;font-size:15px;max-width:70ch}
+.phead svg.trace{position:absolute;right:0;bottom:0;width:min(560px,70%);height:auto;opacity:.5;pointer-events:none}
+.sec-h{font-size:clamp(21px,2.6vw,26px);margin-bottom:22px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.sec-h small{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--copper);font-weight:500}
+.list-h{font-size:17px;padding-bottom:10px;border-bottom:2px solid var(--ink);margin-bottom:6px;position:relative}
+.lede{font-size:clamp(16px,1.9vw,18px);line-height:1.85;color:#222A2F;max-width:72ch}
+
+/* ---------- home hero ---------- */
+.hero{background:var(--deep);color:#EDEFEE;padding-top:clamp(44px,7vw,84px);overflow:hidden}
+.hero .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:#9DB3BB}
+.hero h1{font-size:clamp(36px,7.4vw,72px);letter-spacing:-.05em;line-height:1.08;margin-top:14px}
+.hero .en{margin-top:12px;font-size:clamp(15px,2.3vw,20px);font-weight:600;color:#D6E0E3;letter-spacing:-.02em}
+.hero .en b{color:var(--copper-lt)}
+.hero .thesis{margin-top:24px;font-size:clamp(16px,2.2vw,19px);line-height:1.7;max-width:40ch;color:#E4EAEA;border-left:2px solid var(--copper-lt);padding-left:16px}
+.recruit{margin-top:30px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:15px 18px;border:1px solid var(--line-dark);background:rgba(255,255,255,.04);max-width:780px}
+.recruit .tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;background:var(--copper);color:#fff;padding:4px 8px;border-radius:2px;white-space:nowrap}
+.recruit .txt{flex:1 1 260px;font-size:15px;color:#DCE5E7;min-width:0}
+.recruit a{text-decoration:none;font-size:14px;padding:9px 16px;border-radius:2px;background:#fff;color:var(--deep);font-weight:700;white-space:nowrap}
+.pwm{margin-top:clamp(30px,5vw,52px);width:100%;height:auto;display:block}
+.pwm-cap{font-family:var(--mono);font-size:11px;color:#7E98A1;padding:6px 0 18px}
+
+/* focus + intro */
+.focus-grid{display:grid;gap:clamp(26px,4vw,56px);grid-template-columns:1fr}
+@media(min-width:900px){.focus-grid{grid-template-columns:1fr 1.1fr}}
+.focus{list-style:none;margin:0;padding:0;counter-reset:f}
+.focus li{counter-increment:f;display:grid;grid-template-columns:40px 1fr;gap:10px;padding:13px 0;border-bottom:1px solid var(--line);font-size:16px;font-weight:600;position:relative}
+.focus li::before{content:counter(f,decimal-leading-zero);font-family:var(--mono);font-size:12px;color:var(--copper);font-weight:500;padding-top:3px}
+.figure{margin-top:clamp(30px,4vw,44px);background:#fff;border:1px solid var(--line);padding:clamp(12px,2vw,24px);position:relative}
+.figure img{width:100%;height:auto;margin:0 auto}
+.figure figcaption{font-family:var(--mono);font-size:11.5px;color:var(--ink-50);margin-top:10px;text-align:center}
+
+/* research area cards */
+.areas{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:820px){.areas{grid-template-columns:repeat(3,1fr)}}
+.area{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--deep);padding:22px 22px 20px;position:relative}
+.area .n{font-family:var(--mono);font-size:11.5px;color:var(--copper);letter-spacing:.08em}
+.area h3{font-size:18.5px;margin-top:6px}
+.area .tag{font-size:13.5px;color:var(--ink-50);margin-top:4px}
+.area ul{margin:14px 0 0;padding:0;list-style:none;font-size:14.5px;color:var(--ink-70)}
+.area li{padding:6px 0 6px 16px;border-top:1px solid #ECEBE6;position:relative}
+.area li::before{content:"";position:absolute;left:0;top:17px;width:7px;height:1.5px;background:var(--copper)}
+
+/* research page rows */
+.arow{display:grid;gap:clamp(18px,3vw,40px);grid-template-columns:1fr;padding:clamp(24px,3vw,36px) 0;border-top:1px solid var(--line);position:relative}
+.arow:last-child{border-bottom:1px solid var(--line)}
+@media(min-width:880px){.arow.nopic{grid-template-columns:1fr}}
+@media(min-width:880px){.arow{grid-template-columns:1fr 1.15fr;align-items:center}}
+.arow .pic{background:#fff;border:1px solid var(--line);padding:14px;min-height:120px;display:flex;align-items:center;justify-content:center;position:relative}
+.arow .pic img{width:100%;height:auto}
+.arow .n{font-family:var(--mono);font-size:12px;color:var(--copper);letter-spacing:.08em}
+.arow h3{font-size:clamp(20px,2.4vw,24px);margin-top:4px}
+.arow .tag{color:var(--ink-50);margin-top:4px;font-size:14.5px}
+.arow ul{margin:14px 0 0;padding-left:18px;color:var(--ink-70);font-size:15px}
+.arow li{padding:2px 0}
+.ph-empty{width:100%;min-height:110px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--ink-50);font-family:var(--mono);font-size:11px;line-height:1.7;padding:12px;background:repeating-linear-gradient(135deg,transparent 0 8px,rgba(18,48,60,.04) 8px 16px)}
+
+/* projects */
+.projects{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:760px){.projects{grid-template-columns:1fr 1fr}}
+.proj{background:var(--card);border:1px solid var(--line);position:relative}
+.proj .thumb{aspect-ratio:16/9;background:var(--paper-2);overflow:hidden;border-bottom:1px solid var(--line);position:relative}
+.proj .thumb img{width:100%;height:100%;object-fit:contain;background:#fff}
+.proj .body{padding:16px 20px 18px}
+.proj .status{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:#fff;background:#6B7A82;padding:3px 7px;border-radius:2px;display:inline-block}
+.proj .status.ongoing{background:#2E7D57}.proj .status.completed{background:#3F5E6B}.proj .status.planned{background:#8A9299}
+.proj h3{font-size:18px;margin-top:10px}
+.proj .meta{font-family:var(--mono);font-size:12px;color:var(--ink-50);margin-top:4px}
+.proj .one{margin-top:8px;font-size:14.5px;color:var(--ink-70)}
+.empty-box{border:1px dashed #BDBBB0;padding:28px 22px;color:var(--ink-50);font-size:15px;background:rgba(255,255,255,.4)}
+
+/* professor */
+.prof{display:grid;gap:clamp(24px,4vw,48px);grid-template-columns:1fr;align-items:start}
+@media(min-width:820px){.prof{grid-template-columns:250px 1fr}}
+.portrait{aspect-ratio:3/4;background:var(--paper-2);border:1px solid var(--line);overflow:hidden;position:relative;max-width:260px}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.prof h2{font-size:clamp(26px,3.4vw,34px);letter-spacing:-.04em}
+.prof .nsub{font-size:15px;color:var(--ink-50);margin-top:2px}
+.prof .title{margin-top:12px;font-size:16px;font-weight:600}
+.prof .dept{font-size:14.5px;color:var(--ink-70)}
+.contact-list{margin-top:16px;display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-size:14.5px}
+.contact-list dt{font-family:var(--mono);font-size:11.5px;color:var(--ink-50);letter-spacing:.06em;padding-top:3px}
+.contact-list dd{margin:0}
+.contact-list a{text-decoration:none;border-bottom:1px solid var(--line)}
+.btnrow{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn-o{display:inline-block;font-size:13.5px;text-decoration:none;border:1px solid var(--ink);padding:7px 13px;border-radius:2px;background:transparent;font-weight:600}
+.btn-o:hover{background:var(--ink);color:#fff}
+.btn-o.dark{background:var(--ink);color:#fff}
+.btn-o.dark:hover{background:var(--copper);border-color:var(--copper)}
+.interests{margin-top:22px}
+.interests ul{margin:8px 0 0;padding-left:18px;font-size:14.5px;color:var(--ink-70)}
+.cv-sec{margin-top:clamp(34px,5vw,52px)}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:1fr;gap:2px 22px;padding:14px 0;border-bottom:1px solid var(--line);position:relative}
+@media(min-width:640px){.tl li{grid-template-columns:160px 1fr}}
+.tl .period{font-family:var(--mono);font-size:12.5px;color:var(--ink-50);padding-top:3px}
+.tl .t{font-weight:700;font-size:15.5px}
+.tl .o{font-size:14.5px;color:var(--ink-70)}
+.tl .d{font-size:13.5px;color:var(--ink-50);margin-top:2px}
+.cv-cols{display:grid;gap:0 clamp(24px,4vw,48px);grid-template-columns:1fr}
+
+/* members */
+.pgroup{margin-bottom:clamp(30px,4vw,44px)}
+.mgrid{display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));margin-top:18px}
+.mcard{position:relative}
+.mcard .ph{aspect-ratio:1/1;background:var(--paper-2);border:1px solid var(--line);overflow:hidden;margin-bottom:11px;position:relative}
+.mcard .ph img{width:100%;height:100%;object-fit:cover}
+.mcard b{display:block;font-size:16px;letter-spacing:-.02em}
+.mcard .sub{font-size:13px;color:var(--ink-50)}
+.mcard .bio{font-size:13.5px;color:var(--ink-70);margin-top:6px;line-height:1.6}
+.mcard .mail{font-family:var(--mono);font-size:11.5px;color:var(--ink-50);margin-top:5px;word-break:break-all}
+.empty-note{color:var(--ink-50);font-size:14px;font-family:var(--mono);padding:14px 0}
+
+/* news */
+.news{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.news li{display:grid;grid-template-columns:1fr;gap:2px 22px;padding:18px 0;border-bottom:1px solid var(--line);position:relative}
+@media(min-width:640px){.news li{grid-template-columns:130px 1fr}}
+.news .date{font-family:var(--mono);font-size:12.5px;color:var(--copper);padding-top:3px}
+.news .t{font-weight:700;font-size:16.5px}
+.news .b{font-size:14.5px;color:var(--ink-70);margin-top:4px}
+.news.compact .b{display:none}
+.more{display:inline-block;margin-top:16px;font-size:14px;font-weight:600;color:var(--copper);text-decoration:none}
+.more:hover{text-decoration:underline}
+
+/* publications */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:clamp(30px,4vw,44px)}
+.stat{background:var(--card);padding:18px 20px;position:relative}
+.stat .n{font-size:clamp(28px,4vw,38px);font-weight:800;letter-spacing:-.04em;color:var(--deep);line-height:1.1}
+.stat .l{font-size:13.5px;color:var(--ink-50);margin-top:4px}
+.pubnote{font-size:12.5px;color:var(--ink-50);margin-bottom:10px;font-family:var(--mono)}
+.pubtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px}
+.pubtabs button{font:inherit;font-size:13.5px;font-weight:600;padding:7px 14px;border:1px solid var(--line);background:var(--card);border-radius:2px;cursor:pointer;color:var(--ink-70)}
+.pubtabs button.on{background:var(--deep);border-color:var(--deep);color:#fff}
+.pubsec{margin-bottom:clamp(34px,5vw,50px)}
+.yr{display:grid;grid-template-columns:1fr;gap:0 22px;position:relative}
+@media(min-width:720px){.yr{grid-template-columns:80px 1fr}}
+.yr>h4{font-family:var(--mono);font-size:14px;color:var(--copper);font-weight:500;padding-top:14px}
+.pubs{list-style:none;margin:0;padding:0}
+.pubs li{padding:12px 76px 12px 0;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.7;position:relative;color:#2A3136}
+.yr:first-of-type .pubs,.pubs.first{border-top:0}
+.pubs li b{color:var(--ink)}
+.pubs li a.lk{font-family:var(--mono);font-size:11.5px;color:var(--copper);text-decoration:none;border:1px solid rgba(184,97,42,.35);padding:1px 6px;border-radius:2px;margin-left:6px;white-space:nowrap}
+.pubs li a.lk:hover{background:var(--copper);color:#fff}
+.pubs li .pno{font-family:var(--mono);font-size:11.5px;color:var(--ink-50);margin-right:6px}
+
+/* lecture */
+.term{margin-bottom:clamp(34px,5vw,50px);position:relative}
+.term-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.term-h h3{font-size:19px}
+.badge{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:#fff;background:#2E7D57;padding:3px 8px;border-radius:2px;font-weight:500}
+.badge.plan{background:#8A9299}
+.badge.new{background:var(--copper)}
+.course{padding:18px 0;border-bottom:1px solid var(--line);position:relative}
+.course h4{font-size:17.5px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.course .en{font-size:13.5px;color:var(--ink-50);font-weight:500}
+.course .lvl{font-family:var(--mono);font-size:10.5px;color:var(--ink-50);border:1px solid var(--line);padding:1px 6px;border-radius:2px;font-weight:500}
+.course .desc{margin-top:6px;font-size:14.5px;color:var(--ink-70);max-width:78ch}
+.files{list-style:none;margin:10px 0 0;padding:0}
+.files li{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;padding:8px 76px 8px 12px;border-left:2px solid var(--line);font-size:14px;position:relative}
+.files .ft{flex:1 1 220px;font-weight:600}
+.files .fm{font-family:var(--mono);font-size:11.5px;color:var(--ink-50)}
+.files a.dl{text-decoration:none;font-size:12.5px;border:1px solid var(--ink);padding:3px 10px;border-radius:2px;white-space:nowrap}
+.files a.dl:hover{background:var(--ink);color:#fff}
+.nofiles{font-size:13px;color:var(--ink-50);margin-top:8px;font-family:var(--mono)}
+
+/* join */
+.join{background:var(--deep);color:#E6EBEB}
+.join h2{color:#fff;font-size:clamp(23px,3.4vw,32px)}
+.join .lede{color:#D3DDDF;margin-top:16px}
+.join a.btn{display:inline-block;margin-top:22px;text-decoration:none;font-size:15px;padding:12px 22px;border-radius:2px;background:var(--copper);color:#fff;font-weight:700}
+.join a.btn:hover{background:var(--copper-lt)}
+
+/* contact */
+.contact-grid{display:grid;gap:clamp(24px,4vw,48px);grid-template-columns:1fr}
+@media(min-width:860px){.contact-grid{grid-template-columns:1fr 1.1fr}}
+.facts{border-top:2px solid var(--ink)}
+.facts .row{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px;position:relative}
+.facts .k{flex:0 0 96px;color:var(--ink-50);font-size:13.5px;padding-top:2px}
+.facts .v{flex:1;min-width:0}
+.mapbox{aspect-ratio:4/3;background:var(--paper-2);border:1px solid var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--ink-50);font-family:var(--mono);font-size:11.5px;line-height:1.8}
+.mapbox iframe{width:100%;height:100%;border:0;display:block}
+
+footer{background:var(--deep-2);color:#8FA3AB;padding-block:30px;font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-between}
+footer b{color:#D5DEE0;font-weight:700}
+:focus-visible{outline:2px solid var(--copper);outline-offset:3px}
+
+/* ===== admin mode ===== */
+.adminbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:200;background:#1B1F22;color:#E8EBEC;padding:10px clamp(12px,3vw,22px);align-items:center;gap:10px;flex-wrap:wrap;box-shadow:0 -6px 24px rgba(0,0,0,.22);font-size:13.5px}
+body.admin .adminbar{display:flex}
+body.admin{padding-bottom:90px}
+.adminbar .tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;background:var(--copper);color:#fff;padding:4px 8px;border-radius:2px}
+.adminbar .hint{color:#98A1A6;flex:1 1 240px;min-width:0}
+.adminbar button{font:inherit;font-size:13px;padding:8px 13px;border-radius:3px;cursor:pointer;border:1px solid #3C4348;background:#272C30;color:#E8EBEC}
+.adminbar button:hover{background:#333A3F}
+.adminbar button.primary{background:var(--copper);border-color:var(--copper);color:#fff}
+#dirty{color:#F0B78A}
+body.admin .ed{outline:1px dashed rgba(184,97,42,.6);outline-offset:3px;border-radius:2px;min-width:2em;display:inline-block;cursor:text}
+body.admin .ed:hover{background:rgba(184,97,42,.1)}
+body.admin .ed:focus{outline:2px solid var(--copper);background:rgba(255,255,255,.92);color:#14171A}
+body.admin .ed:empty::before{content:"(비어 있음)";color:#aaa;font-size:12px}
+.ctl{display:none;position:absolute;top:8px;right:0;gap:4px;z-index:20}
+body.admin .ctl{display:flex}
+.ctl button{font:inherit;font-size:11px;line-height:1;padding:5px 7px;cursor:pointer;border:1px solid var(--line);background:#fff;color:#3B4349;border-radius:3px;opacity:.7}
+.ctl button:hover{opacity:1;border-color:var(--ink)}
+.ctl button.del:hover{border-color:#B33A3A;color:#B33A3A}
+.addrow{display:none;margin-top:14px}
+body.admin .addrow{display:block}
+.addbtn{font:inherit;font-size:13px;padding:8px 14px;cursor:pointer;border:1px dashed var(--copper);background:transparent;color:var(--copper);border-radius:3px;margin-right:6px}
+.addbtn:hover{background:rgba(184,97,42,.09)}
+.hero .addbtn,.join .addbtn{color:var(--copper-lt);border-color:var(--copper-lt)}
+.photobtns{display:none;position:absolute;left:6px;bottom:6px;gap:4px;z-index:5;flex-wrap:wrap}
+body.admin .photobtns{display:flex}
+.photobtns button{font:inherit;font-size:11px;padding:5px 8px;cursor:pointer;border:1px solid var(--line);background:rgba(255,255,255,.96);color:#3B4349;border-radius:3px}
+.adm-field{display:none;margin-top:8px;font-size:12.5px;color:var(--ink-50)}
+body.admin .adm-field{display:block}
+.adm-field select,.adm-field textarea{font:inherit;font-size:13px;padding:5px 7px;border:1px solid var(--line);border-radius:3px;background:#fff;color:var(--ink);max-width:100%}
+.adm-field textarea{width:100%;min-height:70px}
+</style>
+</head>
+
+<body>
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="#home" aria-label="SPEED Lab home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="4" fill="#1C4553"/><path d="M4 22h5V10h5v12h5V10h5v12h4" fill="none" stroke="#D9853F" stroke-width="2.4"/></svg>
+      <b id="brand-name">SPEED Lab</b><span id="brand-affil">PKNU</span></a>
+    <nav class="main" id="nav" aria-label="Main"></nav>
+    <button class="langbtn" id="langbtn" type="button">EN</button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page" id="p-home"></section>
+  <section class="page" id="p-news"></section>
+  <section class="page" id="p-research"></section>
+  <section class="page" id="p-professor"></section>
+  <section class="page" id="p-members"></section>
+  <section class="page" id="p-publications"></section>
+  <section class="page" id="p-lecture"></section>
+  <section class="page" id="p-contact"></section>
+</main>
+<footer><div class="wrap" id="footer-body"></div></footer>
+
+<div class="adminbar">
+  <span class="tag">ADMIN</span>
+  <span class="hint">점선 글자를 클릭해 수정 · ↑↓✕ 순서/삭제 · <b>+</b> 새 항목. 메뉴를 옮겨 다니며 고친 뒤 <b>저장</b>하고, 받은 index.html로 GitHub 저장소의 파일을 교체하세요. <span id="dirty"></span></span>
+  <button type="button" id="btn-save" class="primary">저장 (index.html 내려받기)</button>
+  <button type="button" id="btn-json">데이터 백업(.json)</button>
+  <button type="button" id="btn-load">백업 불러오기</button>
+  <button type="button" id="btn-exit">편집 종료</button>
+</div>
+
+<!-- =====================================================================
+     사이트 내용(데이터). 관리자 모드(주소 끝에 #admin 또는 Ctrl+Shift+A)에서
+     화면으로 고치는 것이 가장 쉽습니다. 이 부분을 직접 고칠 때는 JSON 문법
+     (쉼표, 따옴표)을 지켜 주세요.
+     ===================================================================== -->
+<script type="application/json" id="site-data">
+{
+ "brand": {
+  "name": "SPEED Lab",
+  "affil": "PKNU"
+ },
+ "nav": [
+  {
+   "id": "home",
+   "label": {
+    "ko": "Overview",
+    "en": "Overview"
+   }
+  },
+  {
+   "id": "news",
+   "label": {
+    "ko": "News",
+    "en": "News"
+   }
+  },
+  {
+   "id": "research",
+   "label": {
+    "ko": "Research",
+    "en": "Research"
+   }
+  },
+  {
+   "id": "professor",
+   "label": {
+    "ko": "Professor",
+    "en": "Professor"
+   }
+  },
+  {
+   "id": "members",
+   "label": {
+    "ko": "Members",
+    "en": "Members"
+   }
+  },
+  {
+   "id": "publications",
+   "label": {
+    "ko": "Publications",
+    "en": "Publications"
+   }
+  },
+  {
+   "id": "lecture",
+   "label": {
+    "ko": "Lecture",
+    "en": "Lecture"
+   }
+  },
+  {
+   "id": "contact",
+   "label": {
+    "ko": "Contact",
+    "en": "Contact"
+   }
+  }
+ ],
+ "home": {
+  "eyebrow": {
+   "ko": "국립부경대학교 공과대학 · 제어계측공학전공",
+   "en": "Pukyong National University · Control & Instrumentation Engineering"
+  },
+  "title": {
+   "ko": "지능형 전력전자 연구실",
+   "en": "SPEED Lab"
+  },
+  "en_name": "Smart Power Electronics & Electric Drives Laboratory",
+  "thesis": {
+   "ko": "효율적이며, 정밀하고, 신뢰할 수 있는 전력변환 시스템 설계 및 제어 연구",
+   "en": "Design and control of efficient, precise and reliable power conversion systems"
+  },
+  "focus": [
+   {
+    "ko": "전동기 드라이브 시스템 및 정밀 제어",
+    "en": "Motor drive systems and precision control"
+   },
+   {
+    "ko": "대용량(멀티레벨, 병렬시스템) 전력변환 시스템 설계 및 운전",
+    "en": "Design and operation of high-power (multilevel, parallel) conversion systems"
+   },
+   {
+    "ko": "인공지능 기반 전력반도체 열적 상태 추정 및 능동 열관리",
+    "en": "AI-based thermal state estimation and active thermal control of power semiconductors"
+   },
+   {
+    "ko": "전력변환장치의 지능형 고장 진단 및 고장 허용 제어",
+    "en": "Intelligent fault diagnosis and fault-tolerant control of power converters"
+   },
+   {
+    "ko": "강화학습 기반 전력·에너지 시스템 운용",
+    "en": "Reinforcement-learning-based operation of power and energy systems"
+   }
+  ],
+  "intro_h": {
+   "ko": "연구실 소개",
+   "en": "About the Lab"
+  },
+  "intro": {
+   "ko": "본 연구실에서는 전동기 드라이브부터 중전압 대전력 컨버터에 이르기까지, 다양한 전력변환 시스템(모듈형 컨버터 시스템)을 정밀하게 제어하고 그 시스템이 스스로의 상태(전력반도체 내부 온도 및 수명 등)를 추정 및 예측하여 컨버터 시스템 성능과 신뢰성을 관리하도록 만드는 기술을 연구합니다.",
+   "en": "SPEED Lab develops technology that precisely controls power conversion systems, from motor drives to medium-voltage high-power modular converters, and lets those systems estimate and predict their own condition (power-semiconductor junction temperature, remaining lifetime) to manage performance and reliability."
+  },
+  "figure": "images/research_overview.png",
+  "figure_cap": {
+   "ko": "SPEED Lab 연구 개요",
+   "en": "Research overview of SPEED Lab"
+  },
+  "recruit_tag": {
+   "ko": "상시 모집",
+   "en": "RECRUITING"
+  },
+  "recruit": {
+   "ko": "전동기 드라이브, 대전력 전력변환, 그리고 AI를 함께 연구할 학부연구생·대학원생을 찾습니다.",
+   "en": "We are looking for undergraduate and graduate students to work on motor drives, high-power conversion and AI."
+  },
+  "recruit_btn": {
+   "ko": "지원 안내",
+   "en": "How to join"
+  },
+  "news_h": {
+   "ko": "최근 소식",
+   "en": "Latest News"
+  }
+ },
+ "research": {
+  "heading": {
+   "ko": "Research",
+   "en": "Research"
+  },
+  "lede": {
+   "ko": "SPEED Lab의 연구는 전력전자 하드웨어(인버터, 멀티레벨·NPC·MMC 컨버터)에 대한 깊이와, 전력·에너지 시스템에 맞게 설계된 AI(강화학습, 디지털 트윈, Edge AI)라는 두 축 위에 서 있습니다. 학생들은 시뮬레이션에서 제어보드 제작, 실측 파형 검증까지 전 과정을 경험합니다.",
+   "en": "SPEED Lab stands on two legs: depth in power-electronics hardware (inverters, multilevel, NPC and MMC converters) and AI built for power and energy systems (reinforcement learning, digital twins, Edge AI). Students go through the full cycle from simulation to controller boards and measured waveforms."
+  },
+  "areas_h": {
+   "ko": "연구 분야",
+   "en": "Research Areas"
+  },
+  "areas": [
+   {
+    "img": "images/research1.png",
+    "title": {
+     "ko": "Intelligent Machine Drives",
+     "en": "Intelligent Machine Drives"
+    },
+    "tag": {
+     "ko": "자기인지·자기최적화 에너지 변환 시스템",
+     "en": "Self-aware & self-optimizing energy conversion systems"
+    },
+    "items": [
+     {
+      "ko": "전동기 드라이브 시스템 및 정밀 제어",
+      "en": "Motor drive systems and precision control"
+     },
+     {
+      "ko": "AI 기반 전력반도체 열적 상태 추정 및 능동 열관리",
+      "en": "AI-based thermal state estimation and active thermal control"
+     },
+     {
+      "ko": "지능형 고장 진단 및 고장 허용 제어",
+      "en": "Intelligent fault diagnosis and fault-tolerant control"
+     },
+     {
+      "ko": "Edge AI 기반 실시간 추정·제어",
+      "en": "Edge-AI real-time estimation and control"
+     }
+    ]
+   },
+   {
+    "img": "images/research2.png",
+    "title": {
+     "ko": "Advanced Control for High-Power Systems",
+     "en": "Advanced Control for High-Power Systems"
+    },
+    "tag": {
+     "ko": "모듈형·멀티레벨 컨버터의 최적 제어",
+     "en": "Optimal control for modular & multilevel converters"
+    },
+    "items": [
+     {
+      "ko": "대용량(멀티레벨·병렬) 전력변환 시스템 설계 및 운전",
+      "en": "Design and operation of multilevel and parallel converter systems"
+     },
+     {
+      "ko": "병렬 컨버터 순환전류 억제",
+      "en": "Circulating-current suppression in parallel converters"
+     },
+     {
+      "ko": "공통모드 전압·EMI 저감 변조 기법",
+      "en": "Modulation for common-mode voltage and EMI reduction"
+     },
+     {
+      "ko": "선박 전기추진 · 대전력 EV 충전 인프라",
+      "en": "Ship electric propulsion and high-power EV charging"
+     }
+    ]
+   },
+   {
+    "img": "",
+    "title": {
+     "ko": "AI for Power & Energy Systems",
+     "en": "AI for Power & Energy Systems"
+    },
+    "tag": {
+     "ko": "강화학습과 디지털 트윈",
+     "en": "Reinforcement learning and digital twins"
+    },
+    "items": [
+     {
+      "ko": "강화학습 기반 전력·에너지 시스템 운용",
+      "en": "RL-based operation of power and energy systems"
+     },
+     {
+      "ko": "배터리 SOC·온도 동시 밸런싱",
+      "en": "Simultaneous SOC and temperature balancing of batteries"
+     },
+     {
+      "ko": "EV 충전 스테이션 최적 운영",
+      "en": "Optimal management of EV charging stations"
+     },
+     {
+      "ko": "물리 기반 디지털 트윈 + AI 추정",
+      "en": "Physics-informed digital twin with AI estimation"
+     }
+    ]
+   }
+  ],
+  "projects_h": {
+   "ko": "연구 과제",
+   "en": "Research Projects"
+  },
+  "projects_empty": {
+   "ko": "현재 진행 중인 연구 과제를 준비하고 있습니다. 과제가 시작되면 이곳에 소개합니다.",
+   "en": "Research projects are being prepared and will be listed here once they start."
+  },
+  "projects": []
+ },
+ "professor": {
+  "heading": {
+   "ko": "Professor",
+   "en": "Professor"
+  },
+  "photo": "images/members/junhyung_jung.jpg",
+  "name": {
+   "ko": "정준형",
+   "en": "Jun-Hyung Jung"
+  },
+  "name_sub": {
+   "ko": "Jun-Hyung Jung, Ph.D.",
+   "en": "정준형"
+  },
+  "title": {
+   "ko": "조교수",
+   "en": "Assistant Professor"
+  },
+  "dept": {
+   "ko": "국립부경대학교 제어계측공학전공",
+   "en": "Major of Control & Instrumentation Engineering, Division of Electrical Engineering, Pukyong National University"
+  },
+  "email": "jh.jung@pknu.ac.kr",
+  "phone": "+82-51-629-6329",
+  "room": {
+   "ko": "가온관 502호",
+   "en": "Room 502, Gaon Hall"
+  },
+  "cv_url": "files/CV_Jun-Hyung_Jung.pdf",
+  "cv_updated": "2026. 09.",
+  "links": [
+   {
+    "label": "Google Scholar",
+    "url": "https://scholar.google.com/citations?user=B-UG-i4AAAAJ&hl=en"
+   },
+   {
+    "label": "ORCID",
+    "url": "https://orcid.org/0000-0002-4493-4361"
+   },
+   {
+    "label": "IEEE Xplore",
+    "url": "https://ieeexplore.ieee.org/author/37086081490"
+   },
+   {
+    "label": "LinkedIn",
+    "url": "https://www.linkedin.com/in/jun-hyung-jung-jh0813/"
+   }
+  ],
+  "interests_h": {
+   "ko": "Research Interests",
+   "en": "Research Interests"
+  },
+  "interests": [
+   {
+    "ko": "병렬 운전 PWM 컨버터 기반 대용량 전력변환 시스템",
+    "en": "High-power conversion systems with parallel operation of PWM converters"
+   },
+   {
+    "ko": "중전압(MV) 계통연계 AC-DC 멀티레벨 컨버터",
+    "en": "Grid-connected AC-DC multilevel converters for medium-voltage applications"
+   },
+   {
+    "ko": "MV 메가와트급 반도체 변압기(SST)",
+    "en": "MV megawatt solid-state transformers for modern grid systems"
+   },
+   {
+    "ko": "MW급 EV 충전·ESS용 MVDC DC-DC 컨버터",
+    "en": "MVDC DC-DC converters for MW EV charging infrastructure and ESS"
+   },
+   {
+    "ko": "AI × Energy & Power: 전력·에너지 응용을 위한 강화학습",
+    "en": "AI × Energy & Power: reinforcement learning for power electronics and energy"
+   }
+  ],
+  "career_h": {
+   "ko": "Career",
+   "en": "Career"
+  },
+  "career": [
+   {
+    "period": "2026. 09. – 현재",
+    "title": {
+     "ko": "조교수",
+     "en": "Assistant Professor"
+    },
+    "org": {
+     "ko": "국립부경대학교 제어계측공학전공",
+     "en": "Pukyong National University, Major of Control & Instrumentation Engineering"
+    },
+    "detail": {
+     "ko": "전력전자 · 전동기 드라이브 · 머신러닝 / SPEED Lab 책임교수",
+     "en": "Power electronics, motor drives and machine learning · Director of SPEED Lab"
+    }
+   },
+   {
+    "period": "2024. 01. – 2026. 08.",
+    "title": {
+     "ko": "Associate Researcher · Project Leader",
+     "en": "Associate Researcher · Project Leader"
+    },
+    "org": {
+     "ko": "Fraunhofer ISIT, Electronic Energy Systems Group (독일 Kiel)",
+     "en": "Fraunhofer Institute for Silicon Technology (ISIT), Kiel, Germany"
+    },
+    "detail": {
+     "ko": "Hybrid Grids·Power Converter 팀 · 산업체·연구소 과제 8건 책임 (총 약 €900k) · 연구소 AI 담당",
+     "en": "Hybrid Grids and Power Converter teams · led 8 projects with industry and institutes (≈ €900k) · AI representative of the institute"
+    }
+   },
+   {
+    "period": "2020. 10. – 2023. 12.",
+    "title": {
+     "ko": "Postdoctoral Researcher",
+     "en": "Postdoctoral Researcher"
+    },
+    "org": {
+     "ko": "Chair of Power Electronics, Kiel University (독일)",
+     "en": "Chair of Power Electronics, Kiel University, Germany"
+    },
+    "detail": {
+     "ko": "Multilevel Converter 연구그룹 리딩 포스닥 · 지도: Prof. Marco Liserre (IEEE Fellow)",
+     "en": "Leading postdoc of the Multilevel Converter group · Advisor: Prof. Marco Liserre (IEEE Fellow)"
+    }
+   },
+   {
+    "period": "2019. 10. – 2020. 09.",
+    "title": {
+     "ko": "연구원",
+     "en": "Associate Researcher"
+    },
+    "org": {
+     "ko": "부산대학교 동남권 그랜드 ICT 연구센터",
+     "en": "South-East Grand ICT Research Center, Pusan National University"
+    },
+    "detail": {
+     "ko": "WBG 소자 기반 계통연계형 컨버터 개발",
+     "en": "Grid-connected converters using WBG devices"
+    }
+   }
+  ],
+  "edu_h": {
+   "ko": "Education",
+   "en": "Education"
+  },
+  "education": [
+   {
+    "period": "2019. 08.",
+    "title": {
+     "ko": "공학박사 (Ph.D.)",
+     "en": "Ph.D. in System and Controls"
+    },
+    "org": {
+     "ko": "부산대학교 전자전기컴퓨터공학과",
+     "en": "Dept. of Electrical and Computer Engineering, Pusan National University"
+    },
+    "detail": {
+     "ko": "학위논문: Reduction of Common-Mode Voltage from Grid-Connected AC/DC Three-phase Three-level NPC PWM Converter System Using Fourth-Leg Active Filter · 지도교수: 김장목",
+     "en": "Thesis: Reduction of Common-Mode Voltage from Grid-Connected AC/DC Three-phase Three-level NPC PWM Converter System Using Fourth-Leg Active Filter · Advisor: Prof. Jang-Mok Kim"
+    }
+   },
+   {
+    "period": "2014. 02.",
+    "title": {
+     "ko": "공학석사 (M.S.)",
+     "en": "M.Sc. in Electrical Engineering"
+    },
+    "org": {
+     "ko": "부산대학교 전자전기컴퓨터공학과",
+     "en": "Dept. of Electrical and Computer Engineering, Pusan National University"
+    },
+    "detail": {
+     "ko": "학위논문: A PWM Control Strategy for Low-speed Operation of Three-Level NPC Inverter Based on Bootstrap Gate Drive Circuit · 지도교수: 김장목",
+     "en": "Thesis: A PWM Control Strategy for Low-speed Operation of Three-Level NPC Inverter Based on Bootstrap Gate Drive Circuit · Advisor: Prof. Jang-Mok Kim"
+    }
+   },
+   {
+    "period": "2012. 02.",
+    "title": {
+     "ko": "공학사 (B.S.)",
+     "en": "B.Sc. in Electrical Engineering"
+    },
+    "org": {
+     "ko": "부산대학교 전자전기컴퓨터공학과",
+     "en": "Dept. of Electrical and Computer Engineering, Pusan National University"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   }
+  ],
+  "teach_h": {
+   "ko": "Teaching Experience",
+   "en": "Teaching Experience"
+  },
+  "teaching": [
+   {
+    "period": "2021 – 2025",
+    "title": {
+     "ko": "Lecturer — Microcontroller and FPGA Technique for Power Electronics Applications",
+     "en": "Lecturer — Microcontroller and FPGA Technique for Power Electronics Applications"
+    },
+    "org": {
+     "ko": "Kiel University, 석사과정 (강의·실습, 5 ECTS)",
+     "en": "Kiel University, M.Sc. course (lecture & exercise, 5 ECTS)"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "2020 – 2023",
+    "title": {
+     "ko": "Teaching Assistant",
+     "en": "Teaching Assistant"
+    },
+    "org": {
+     "ko": "Kiel University",
+     "en": "Kiel University"
+    },
+    "detail": {
+     "ko": "Design of Power Electronics (2020–2022) · B.Sc. Practice (2021, 2023)",
+     "en": "Design of Power Electronics (2020–2022) · B.Sc. Practice (2021, 2023)"
+    }
+   }
+  ],
+  "activities_h": {
+   "ko": "Academic Activities",
+   "en": "Academic Activities"
+  },
+  "activities": [
+   {
+    "period": "",
+    "title": {
+     "ko": "Track Chair, AI Track",
+     "en": "Track Chair, AI Track"
+    },
+    "org": {
+     "ko": "IEEE Energy Conversion Congress and Exposition (ECCE)",
+     "en": "IEEE Energy Conversion Congress and Exposition (ECCE)"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "2025",
+    "title": {
+     "ko": "Tutorial: Modular Multilevel Converters as a Backbone for Medium Voltage Grids",
+     "en": "Tutorial: Modular Multilevel Converters as a Backbone for Medium Voltage Grids"
+    },
+    "org": {
+     "ko": "IEEE ECCE Europe 2025",
+     "en": "IEEE ECCE Europe 2025"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "2024",
+    "title": {
+     "ko": "Seminar: High-Power Converters: Active Reliability & Fault-Tolerant Operation",
+     "en": "Seminar: High-Power Converters: Active Reliability & Fault-Tolerant Operation"
+    },
+    "org": {
+     "ko": "PCIM Europe 2024",
+     "en": "PCIM Europe 2024"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "",
+    "title": {
+     "ko": "Journal Reviewer",
+     "en": "Journal Reviewer"
+    },
+    "org": {
+     "ko": "IEEE Trans. Industrial Electronics · IEEE Trans. Power Electronics · IEEE JESTPE · IEEE Trans. Industry Applications · Journal of Power Electronics · Journal of Electrical Engineering & Technology",
+     "en": "IEEE Trans. Industrial Electronics · IEEE Trans. Power Electronics · IEEE JESTPE · IEEE Trans. Industry Applications · Journal of Power Electronics · Journal of Electrical Engineering & Technology"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   }
+  ],
+  "grants_h": {
+   "ko": "Research Grants",
+   "en": "Research Grants"
+  },
+  "grants": [
+   {
+    "period": "2026. 10. – 2027. 09.",
+    "title": {
+     "ko": "인공지능 기반 전동기 드라이브 시스템 연구",
+     "en": "AI-based Motor Drive Systems"
+    },
+    "org": {
+     "ko": "국립부경대학교 신임교수 학술연구개발비",
+     "en": "Pukyong National University · New Faculty Research Grant"
+    },
+    "detail": {
+     "ko": "연구책임자",
+     "en": "Principal Investigator"
+    }
+   }
+  ],
+  "patents_h": {
+   "ko": "Patents",
+   "en": "Patents"
+  },
+  "patents": [],
+  "supervision_h": {
+   "ko": "Thesis Supervision (Kiel University 외)",
+   "en": "Thesis Supervision"
+  },
+  "supervision": [
+   {
+    "period": "2026",
+    "title": {
+     "ko": "Fault Diagnosis Algorithm for Modular Multilevel Isolated Dual-Active-Bridge DC-DC Converter",
+     "en": "Fault Diagnosis Algorithm for Modular Multilevel Isolated Dual-Active-Bridge DC-DC Converter"
+    },
+    "org": {
+     "ko": "Mohammad Ashik Amin · M.Sc. thesis, Kiel University",
+     "en": "Mohammad Ashik Amin · M.Sc. thesis, Kiel University"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "2024",
+    "title": {
+     "ko": "Active Thermal Control with DPWM for Modular Multilevel Converters",
+     "en": "Active Thermal Control with DPWM for Modular Multilevel Converters"
+    },
+    "org": {
+     "ko": "Stayner Nobrega Barros · M.Sc. thesis, Kiel University",
+     "en": "Stayner Nobrega Barros · M.Sc. thesis, Kiel University"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "2024",
+    "title": {
+     "ko": "Machine Learning Based Estimation of Sub-module Status in Modular Multilevel Converter",
+     "en": "Machine Learning Based Estimation of Sub-module Status in Modular Multilevel Converter"
+    },
+    "org": {
+     "ko": "Mohamed Eissa · M.Sc. thesis, École Centrale de Nantes",
+     "en": "Mohamed Eissa · M.Sc. thesis, École Centrale de Nantes"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "2023",
+    "title": {
+     "ko": "Machine Learning based Power Management for Solar-powered Residential Building Applications",
+     "en": "Machine Learning based Power Management for Solar-powered Residential Building Applications"
+    },
+    "org": {
+     "ko": "Dominik Frymark · M.Sc. thesis, Kiel University",
+     "en": "Dominik Frymark · M.Sc. thesis, Kiel University"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "2023",
+    "title": {
+     "ko": "Optimal Design and Machine Learning based Power Management for an EV Charging Station with Energy Storage System",
+     "en": "Optimal Design and Machine Learning based Power Management for an EV Charging Station with Energy Storage System"
+    },
+    "org": {
+     "ko": "Tailei Wang · M.Sc. thesis, Kiel University",
+     "en": "Tailei Wang · M.Sc. thesis, Kiel University"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "2023",
+    "title": {
+     "ko": "Intelligent Fault Diagnosis for Modular Multilevel Converters",
+     "en": "Intelligent Fault Diagnosis for Modular Multilevel Converters"
+    },
+    "org": {
+     "ko": "Essam Arifi · M.Sc. thesis, Kiel University",
+     "en": "Essam Arifi · M.Sc. thesis, Kiel University"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "2023",
+    "title": {
+     "ko": "Kalman-Filter based Thermal Digital Twin",
+     "en": "Kalman-Filter based Thermal Digital Twin"
+    },
+    "org": {
+     "ko": "Mohammad El-Iraky · M.Sc. thesis, Kiel University",
+     "en": "Mohammad El-Iraky · M.Sc. thesis, Kiel University"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "2022",
+    "title": {
+     "ko": "Power Loss Analysis of Medium-Voltage Isolated DC-DC Converter for EV Charging Station",
+     "en": "Power Loss Analysis of Medium-Voltage Isolated DC-DC Converter for EV Charging Station"
+    },
+    "org": {
+     "ko": "Rui Li · M.Sc. thesis, Kiel University",
+     "en": "Rui Li · M.Sc. thesis, Kiel University"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   },
+   {
+    "period": "2022",
+    "title": {
+     "ko": "Machine Learning based Control for Modular Multilevel Converters",
+     "en": "Machine Learning based Control for Modular Multilevel Converters"
+    },
+    "org": {
+     "ko": "Andreas Zahner · B.Sc. thesis, Kiel University",
+     "en": "Andreas Zahner · B.Sc. thesis, Kiel University"
+    },
+    "detail": {
+     "ko": "",
+     "en": ""
+    }
+   }
+  ]
+ },
+ "members": {
+  "heading": {
+   "ko": "Members",
+   "en": "Members"
+  },
+  "groups": [
+   {
+    "label": {
+     "ko": "Ph.D. Students",
+     "en": "Ph.D. Students"
+    },
+    "members": []
+   },
+   {
+    "label": {
+     "ko": "M.S. Students",
+     "en": "M.S. Students"
+    },
+    "members": []
+   },
+   {
+    "label": {
+     "ko": "Undergraduate Researchers",
+     "en": "Undergraduate Researchers"
+    },
+    "members": []
+   },
+   {
+    "label": {
+     "ko": "Alumni",
+     "en": "Alumni"
+    },
+    "members": []
+   }
+  ],
+  "empty": {
+   "ko": "— 모집 중 —",
+   "en": "— Recruiting —"
+  }
+ },
+ "news": {
+  "heading": {
+   "ko": "News",
+   "en": "News"
+  },
+  "items": [
+   {
+    "date": "2026. 09.",
+    "title": {
+     "ko": "신임교수 학술연구개발비 과제 선정",
+     "en": "New faculty research grant awarded"
+    },
+    "body": {
+     "ko": "「인공지능 기반 전동기 드라이브 시스템 연구」가 국립부경대학교 신임교수 학술연구개발비 과제로 선정되었습니다. (2026. 10. – 2027. 09.)",
+     "en": "“AI-based Motor Drive Systems” was selected for the PKNU new faculty research grant (Oct 2026 – Sep 2027)."
+    }
+   },
+   {
+    "date": "2026. 09. 01.",
+    "title": {
+     "ko": "SPEED Lab 개설",
+     "en": "SPEED Lab opened"
+    },
+    "body": {
+     "ko": "국립부경대학교 제어계측공학전공에 지능형 전력전자 연구실(Smart Power Electronics & Electric Drives Laboratory)이 개설되었습니다. 대학원생과 학부연구생을 모집합니다.",
+     "en": "The Smart Power Electronics & Electric Drives Laboratory opened at Pukyong National University. We are recruiting graduate students and undergraduate researchers."
+    }
+   }
+  ]
+ },
+ "publications": {
+  "heading": {
+   "ko": "Publications",
+   "en": "Publications"
+  },
+  "legend": "* Corresponding author",
+  "updated": "Last updated: 2026. 09.",
+  "stats": [
+   {
+    "n": "13",
+    "label": {
+     "ko": "국제·국내 저널 논문",
+     "en": "Journal articles"
+    }
+   },
+   {
+    "n": "18",
+    "label": {
+     "ko": "국제 학술대회 논문 (최근 5년)",
+     "en": "Conference papers (last 5 yrs)"
+    }
+   },
+   {
+    "n": "9",
+    "label": {
+     "ko": "석·학사 학위논문 지도",
+     "en": "Theses supervised"
+    }
+   }
+  ],
+  "review_h": {
+   "ko": "Under Review · Early Access",
+   "en": "Under Review · Early Access"
+  },
+  "review": [
+   {
+    "text": "J. Jung*, S. Bazyar, D. D’Amato, I. Jeong and M. Liserre, “A Single-Carrier Rotating Modulation Strategy for Medium-Voltage Isolated Modular Multilevel DC-DC Converters,” IEEE Access, under review.",
+    "url": ""
+   },
+   {
+    "text": "S. Bazyar, J. Jung, H. Beiranvand, H. Iman-Eini and M. Liserre, “Hybrid Time-Frequency Domain Modeling and Analysis of MMC-Based DC/DC Converters,” IEEE Transactions on Industrial Electronics, early access.",
+    "url": ""
+   }
+  ],
+  "journals_h": {
+   "ko": "Journal Articles",
+   "en": "Journal Articles"
+  },
+  "journals": [
+   {
+    "year": "2026",
+    "items": [
+     {
+      "text": "Q. Xun, J. Jung*, T. Wang, M. Liserre and D. Nowotka, “A Two-Stage Framework for Optimal Battery Sizing and Reinforcement Learning based Energy Management of EV Charging Stations,” IEEE Transactions on Transportation Electrification, vol. 12, no. 2, pp. 2830–2842, Apr. 2026.",
+      "url": "https://ieeexplore.ieee.org/document/11358768"
+     }
+    ]
+   },
+   {
+    "year": "2025",
+    "items": [
+     {
+      "text": "R. Li, J. Jung*, J. Diers, T. Hamann, H. Beiranvand, M. Liserre and D. Nowotka, “Reinforcement Learning for Simultaneous SOC and Temperature Balancing of Li-Ion Battery Cells in Battery Management Systems,” IEEE Access, vol. 13, pp. 175357–175372, 2025.",
+      "url": "https://ieeexplore.ieee.org/document/11193835"
+     }
+    ]
+   },
+   {
+    "year": "2024",
+    "items": [
+     {
+      "text": "R. Sancio, J. Jung*, S. Pugliese, M. Langwasser and M. Liserre, “Advanced Zero-Sequence Current Suppression in P-HIL Testbed with Integration of Feed-Forward Compensation and LADRC,” IEEE Access, vol. 12, pp. 85400–85410, Jun. 2024.",
+      "url": "https://ieeexplore.ieee.org/document/10559826"
+     },
+     {
+      "text": "J. Jung*, S. Pugliese and M. Liserre, “Efficiency Enhanced Zero CM Voltage Space Vector Modulation for Parallel Three-level Converters,” IEEE Transactions on Power Electronics, vol. 39, no. 2, pp. 1974–1979, Feb. 2024.",
+      "url": "https://ieeexplore.ieee.org/document/10319308"
+     }
+    ]
+   },
+   {
+    "year": "2023",
+    "items": [
+     {
+      "text": "S. Brueske*, S. Rupp, J. Jung and M. Langwasser, “Power-electronics-based distribution – flexible solutions tailored to the grid site,” e&i Elektrotechnik und Informationstechnik, vol. 140, pp. 634–644, Dec. 2023.",
+      "url": "https://link.springer.com/article/10.1007/s00502-023-01192-8"
+     },
+     {
+      "text": "J. Jung*, J. Kim and M. Liserre, “Conducted EMI Reduction by Active Power Filter Embedded in Neutral-Point-Clamped Converters,” IEEE Transactions on Power Electronics, vol. 38, no. 12, pp. 15551–15565, Dec. 2023.",
+      "url": "https://ieeexplore.ieee.org/document/10246025"
+     }
+    ]
+   },
+   {
+    "year": "2021",
+    "items": [
+     {
+      "text": "S. Hwang, S. Cho, J. Jung and J. Kim*, “Phase Current Measurement Method of Dual Inverter-Motor Drive System Using a Single DC Link Current Sensor,” Energies, vol. 14, no. 18, p. 5626, Sep. 2021.",
+      "url": "https://www.mdpi.com/1996-1073/14/18/5626"
+     },
+     {
+      "text": "J. Jung, S. Hwang and J. Kim*, “A Common-mode Voltage Reduction Method Using an Active Power Filter for a Three-Phase Three-Level NPC PWM Converter,” IEEE Transactions on Industry Applications, vol. 57, no. 4, pp. 3787–3800, Jul./Aug. 2021.",
+      "url": "https://ieeexplore.ieee.org/document/9330776"
+     }
+    ]
+   },
+   {
+    "year": "2020",
+    "items": [
+     {
+      "text": "H. Ku, J. Jung, J. Park, J. Kim* and Y. Son, “Fault-Tolerant Control Strategy for Open-Circuit Fault of Two Parallel-Connected Three-Phase AC-DC Two-Level PWM Converter,” Journal of Power Electronics, vol. 20, no. 9, pp. 731–742, 2020.",
+      "url": "https://link.springer.com/article/10.1007/s43236-020-00066-y"
+     },
+     {
+      "text": "J. Jung, H. Ku, W. Im and J. Kim*, “A Carrier-based PWM Control Strategy for Three-level NPC Inverter Based on Bootstrap Gate Drive Circuit,” IEEE Transactions on Power Electronics, vol. 35, no. 3, pp. 2843–2860, Mar. 2020.",
+      "url": "https://ieeexplore.ieee.org/document/8768217"
+     }
+    ]
+   },
+   {
+    "year": "2019",
+    "items": [
+     {
+      "text": "J. Jung, H. Ku, Y. Son and J. Kim*, “Open-Switch Fault Diagnosis Algorithm and Tolerant Control Method of the Three-Phase Three-Level NPC Active Rectifier,” Energies, vol. 12, no. 13, p. 2495, Jun. 2019.",
+      "url": "https://www.mdpi.com/1996-1073/12/13/2495"
+     },
+     {
+      "text": "J. Jung, J. Park, J. Kim* and Y. Son, “DC-Link Voltage Balance Control Using Fourth-Phase for 3-Phase 3-Level NPC PWM Converters with Common-Mode Voltage Reduction Technique,” Journal of Power Electronics, vol. 19, no. 1, pp. 108–118, Jan. 2019.",
+      "url": "https://koreascience.kr/article/JAKO201911338886201.page"
+     }
+    ]
+   },
+   {
+    "year": "2017",
+    "items": [
+     {
+      "text": "Y. Son, J. Jung and J. Kim*, “Advanced Field Weakening Control for Squirrel-Cage Induction Motor in Wide Range of DC-Link Voltage Conditions,” Journal of Electrical Engineering & Technology, vol. 12, no. 2, pp. 665–673, Mar. 2017.",
+      "url": "https://koreascience.or.kr/article/JAKO201709641401733.page"
+     }
+    ]
+   }
+  ],
+  "conf_h": {
+   "ko": "Conference Papers",
+   "en": "Conference Papers"
+  },
+  "conferences": [
+   {
+    "year": "2026",
+    "items": [
+     {
+      "text": "M. Votava, H. Beiranvand, J. Jung, S. Bazyar and M. Liserre, “Steady-State Model and Operating Analysis of an MMC-based Multiport DC-DC Converter,” PCIM Europe 2026 (accepted).",
+      "url": ""
+     },
+     {
+      "text": "A. Eldistawy, J. Jung, E. D. Almawu, N. M. L. Tan and M. Liserre, “Control of an Input-Series Output-Parallel Asymmetric Triple-Active-Bridge for Medium-Voltage DC Renewable Applications,” International Power Electronics Conference (IPEC), 2026.",
+      "url": ""
+     }
+    ]
+   },
+   {
+    "year": "2025",
+    "items": [
+     {
+      "text": "J. Jung, D. D’Amato, C. Park and M. Liserre, “Thermal Stress Balancing Algorithm Using Nearest-Level PWM for Medium Voltage MMCs,” IEEE ECCE Europe, 2025.",
+      "url": ""
+     },
+     {
+      "text": "J. Jung, D. D’Amato, R. Li and M. Liserre, “Voltage Balancing of Modular Multilevel DC-DC Converter for MV-LV DC Transformers,” IEEE Kiel PowerTech, 2025.",
+      "url": ""
+     },
+     {
+      "text": "V. Y. Konda, J. Jung, Y. Pascal and M. Liserre, “Junction Temperature Estimation in IGBT Modules using Machine Learning based Finetuning,” PCIM Europe, 2025.",
+      "url": ""
+     },
+     {
+      "text": "D. D’Amato, J. Jung and M. Liserre, “Discontinuous Modulation Strategy for Voltage and Temperature Balancing of MMCs,” IEEE Applied Power Electronics Conference and Exposition (APEC), 2025.",
+      "url": ""
+     }
+    ]
+   },
+   {
+    "year": "2024",
+    "items": [
+     {
+      "text": "V. Y. Konda, J. Jung and M. Liserre, “Intelligent Junction Temperature Estimation of an IGBT Using Machine Learning and Vce Measurement,” IEEE 15th International Symposium on Power Electronics for Distributed Generation Systems (PEDG), 2024.",
+      "url": ""
+     }
+    ]
+   },
+   {
+    "year": "2023",
+    "items": [
+     {
+      "text": "S. Bazyar, J. Jung, H. Beiranvand, J. V. M. Farias and M. Liserre, “Quasi Two-Level Modulation for the MMC-Based Isolated DC/DC Converter,” IEEE Energy Conversion Congress and Exposition (ECCE), 2023.",
+      "url": ""
+     },
+     {
+      "text": "S. Bazyar, J. Jung, R. Li, H. Beiranvand and M. Liserre, “Losses Analysis of MMC in Medium-Frequency Medium Voltage DAB Converter for Charging Station,” 25th European Conference on Power Electronics and Applications (EPE’23 ECCE Europe), 2023.",
+      "url": ""
+     },
+     {
+      "text": "K. Harwardt, J. Jung, H. Beiranvand, D. Nowotka and M. Liserre, “Lithium-Ion Battery Management System with Reinforcement Learning for Balancing State of Charge and Cell Temperature,” IEEE Belgrade PowerTech, 2023.",
+      "url": ""
+     },
+     {
+      "text": "M. Hassanifar, V. M. Hrishikesan, J. Jung, S. Bazyar, H. Beiranvand, T. Pereira, M. Langwasser and M. Liserre, “Modular Multilevel Converter Enabling Multibus DC Distribution,” IEEE CPE-POWERENG, 2023.",
+      "url": ""
+     },
+     {
+      "text": "J. Jung, S. Bazyar, H. Beiranvand, J. V. M. Farias and M. Liserre, “A Single Carrier Rotating Modulation for Modular Multilevel Converter based Isolated DC-DC Converters in EV Charging Station,” ICPE 2023 – ECCE Asia, 2023.",
+      "url": ""
+     }
+    ]
+   },
+   {
+    "year": "2022",
+    "items": [
+     {
+      "text": "J. Jung, E. Hosseini, M. Liserre and L. M. Fernández-Ramírez, “Reinforcement Learning Based Modulation for Balancing Capacitor Voltage and Thermal Stress to Enhance Current Capability of MMCs,” IEEE PEDG, 2022.",
+      "url": ""
+     },
+     {
+      "text": "V. H. Nguyen, H. J. Hinrichs, J. Jung and M. Liserre, “Impedance Measurement of a Medium-Voltage Grid by a Mobile Measuring System with the Capability to Improve Power Quality,” IEEE PEDG, 2022.",
+      "url": ""
+     },
+     {
+      "text": "J. Jung, S. Pugliese and M. Liserre, “Space Vector Modulation Technique for Reducing Harmonics in Current with Zero Common-Mode Voltage for Two-Parallel Three-Level Converters,” IEEE Applied Power Electronics Conference and Exposition (APEC), 2022.",
+      "url": ""
+     }
+    ]
+   },
+   {
+    "year": "2021",
+    "items": [
+     {
+      "text": "A. Tcai, T. Wijekoon, J. Jung and M. Liserre, “Quasi-Reference PWM for 3-level Voltage Source Inverters,” IEEE Energy Conversion Congress and Exposition (ECCE), 2021.",
+      "url": ""
+     },
+     {
+      "text": "J. Jung, M. Langwasser, S. Pugliese and M. Liserre, “Zero-sequence Circulating Current Suppression with Stand-alone Feedforward Control for Power Hardware-in-the-Loop System,” IEEE Energy Conversion Congress and Exposition (ECCE), 2021.",
+      "url": ""
+     },
+     {
+      "text": "J. Jung, S. Pugliese, M. Langwasser and M. Liserre, “Analysis and Suppression of Zero-Sequence Circulating Current in Multi-Parallel Converters,” IEEE CPE-PowerEng, 2021.",
+      "url": ""
+     }
+    ]
+   }
+  ]
+ },
+ "lecture": {
+  "heading": {
+   "ko": "Lecture",
+   "en": "Lecture"
+  },
+  "intro": {
+   "ko": "담당 과목의 강의자료를 학기별로 모아 둡니다. 자료는 학기 중에도 보완되므로 내려받기 전에 버전과 갱신 날짜를 확인하세요.",
+   "en": "Lecture materials are collected here by term. Files are revised during the semester, so check the version and date before downloading."
+  },
+  "terms": [
+   {
+    "label": {
+     "ko": "2026학년도 2학기",
+     "en": "Fall 2026"
+    },
+    "status": {
+     "ko": "진행 중",
+     "en": "Current"
+    },
+    "courses": [
+     {
+      "title": {
+       "ko": "전자회로및설계1",
+       "en": "Electronic Circuits and Design I"
+      },
+      "level": "Undergraduate",
+      "tag": {
+       "ko": "",
+       "en": ""
+      },
+      "desc": {
+       "ko": "다이오드와 트랜지스터(BJT, MOSFET)의 동작 원리에서 출발해 바이어스 회로, 소신호 모델, 증폭기 해석까지 다룹니다. 부하선과 동작점이라는 하나의 방법이 소자를 바꿔가며 반복되는 과목이며, 이후 전력전자와 전동기 제어에서 게이트 드라이브와 센서 회로를 설계하는 토대가 됩니다.",
+       "en": "Starting from the operating principles of diodes and transistors (BJT, MOSFET), the course covers biasing, small-signal models and amplifier analysis — the foundation for gate-drive and sensing circuits in power electronics."
+      },
+      "files": []
+     },
+     {
+      "title": {
+       "ko": "전기전자실험2",
+       "en": "Electrical and Electronic Experiments II"
+      },
+      "level": "Undergraduate",
+      "tag": {
+       "ko": "",
+       "en": ""
+      },
+      "desc": {
+       "ko": "회로 이론과 전자회로 수업에서 배운 내용을 실제 소자와 계측 장비로 확인하는 실험 과목입니다.",
+       "en": "A laboratory course verifying circuit and electronics theory with real components and instruments."
+      },
+      "files": []
+     }
+    ]
+   },
+   {
+    "label": {
+     "ko": "2027학년도 1학기",
+     "en": "Spring 2027"
+    },
+    "status": {
+     "ko": "개설 예정",
+     "en": "Planned"
+    },
+    "courses": [
+     {
+      "title": {
+       "ko": "전자회로및설계2",
+       "en": "Electronic Circuits and Design II"
+      },
+      "level": "Undergraduate",
+      "tag": {
+       "ko": "",
+       "en": ""
+      },
+      "desc": {
+       "ko": "전자회로및설계1에 이어 다단 증폭기, 주파수 응답, 궤환, 연산증폭기 응용 회로를 다룹니다.",
+       "en": "Continuation of Electronic Circuits and Design I: multistage amplifiers, frequency response, feedback and op-amp circuits."
+      },
+      "files": []
+     },
+     {
+      "title": {
+       "ko": "전기전자실험1",
+       "en": "Electrical and Electronic Experiments I"
+      },
+      "level": "Undergraduate",
+      "tag": {
+       "ko": "",
+       "en": ""
+      },
+      "desc": {
+       "ko": "기초 계측 장비 사용법과 기본 회로 실험을 다루는 실험 과목입니다.",
+       "en": "A laboratory course on basic instrumentation and fundamental circuit experiments."
+      },
+      "files": []
+     },
+     {
+      "title": {
+       "ko": "전기에너지제어",
+       "en": "Electric Energy Control"
+      },
+      "level": "Undergraduate",
+      "tag": {
+       "ko": "신설",
+       "en": "New"
+      },
+      "desc": {
+       "ko": "전력변환 장치와 전동기 드라이브를 중심으로 전기에너지를 변환·제어하는 원리를 다루는 신설 과목입니다.",
+       "en": "A new course on the conversion and control of electric energy, centred on power converters and motor drives."
+      },
+      "files": []
+     }
+    ]
+   }
+  ],
+  "empty_files": {
+   "ko": "강의자료는 학기 중 순차적으로 업로드됩니다.",
+   "en": "Materials will be uploaded during the term."
+  }
+ },
+ "join": {
+  "heading": {
+   "ko": "학부연구생 및 대학원생 상시 모집",
+   "en": "Undergraduate researchers and graduate students wanted"
+  },
+  "lede": {
+   "ko": "SPEED Lab은 2026년에 시작한 연구실입니다. 장비를 고르고 실험 벤치를 세우고 첫 논문을 쓰는 과정에 처음부터 함께하게 됩니다. 회로를 직접 만들어 보는 것을 즐기고, 시뮬레이션과 실측이 다를 때 그 이유를 끝까지 따라가는 학생을 찾습니다. 이력서와 성적증명서를 첨부해 이메일로 연락 주세요. 연구실 방문은 언제든 환영합니다.",
+   "en": "SPEED Lab started in 2026. You would help choose the instruments, build the bench and write the first papers from day one. We look for students who enjoy building real circuits and chase down why simulation and measurement disagree. Email your CV and transcript; visitors are always welcome."
+  },
+  "btn": {
+   "ko": "교수에게 이메일 보내기",
+   "en": "Email the Professor"
+  }
+ },
+ "contact": {
+  "heading": {
+   "ko": "Contact",
+   "en": "Contact"
+  },
+  "facts": [
+   {
+    "k": {
+     "ko": "교수",
+     "en": "Professor"
+    },
+    "v": {
+     "ko": "정준형 (Jun-Hyung Jung)",
+     "en": "Prof. Jun-Hyung Jung"
+    }
+   },
+   {
+    "k": {
+     "ko": "이메일",
+     "en": "Email"
+    },
+    "v": {
+     "ko": "jh.jung@pknu.ac.kr",
+     "en": "jh.jung@pknu.ac.kr"
+    }
+   },
+   {
+    "k": {
+     "ko": "전화",
+     "en": "Phone"
+    },
+    "v": {
+     "ko": "051-629-6329",
+     "en": "+82-51-629-6329"
+    }
+   },
+   {
+    "k": {
+     "ko": "교수연구실",
+     "en": "Office"
+    },
+    "v": {
+     "ko": "가온관 502호",
+     "en": "Room 502, Gaon Hall"
+    }
+   },
+   {
+    "k": {
+     "ko": "주소",
+     "en": "Address"
+    },
+    "v": {
+     "ko": "(48513) 부산광역시 남구 용소로 45 국립부경대학교 대연캠퍼스",
+     "en": "45 Yongso-ro, Nam-gu, Busan 48513, Republic of Korea"
+    }
+   }
+  ],
+  "mapEmbed": "\u003ciframe src=\"https://maps.google.com/maps?q=%EB%B6%80%EA%B2%BD%EB%8C%80%ED%95%99%EA%B5%90%20%EA%B0%80%EC%98%A8%EA%B4%80&z=16&output=embed\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\" title=\"map\">\u003c/iframe>"
+ },
+ "footer": {
+  "line": {
+   "ko": "국립부경대학교 제어계측공학전공 · 부산광역시 남구 용소로 45 가온관 502호",
+   "en": "Pukyong National University · 45 Yongso-ro, Nam-gu, Busan, Korea"
+  },
+  "copyright": "© 2026 PKNU SPEED Lab. All rights reserved."
+ }
+}
+</script>
+
+<script>
+var TEMPLATE = document.documentElement.outerHTML;
+var DATA = JSON.parse(document.getElementById('site-data').textContent);
+var LANG = 'ko', ADMIN = false, DIRTY = false, PAGE = 'home', PUBTAB = 'all';
+var PAGES = ['home','news','research','professor','members','publications','lecture','contact'];
+try{var sl=localStorage.getItem('speed-lang');if(sl==='en'||sl==='ko')LANG=sl;}catch(e){}
+
+/* ---------- utils ---------- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function nl(s){return esc(s).replace(/\n/g,'<br>');}
+function get(p){try{return p.split('.').reduce(function(o,k){return o[k];},DATA);}catch(e){return undefined;}}
+function setp(p,v){var ks=p.split('.'),last=ks.pop();var o=ks.reduce(function(o,k){return o[k];},DATA);o[last]=v;dirty();}
+function dirty(){DIRTY=true;var d=document.getElementById('dirty');if(d)d.textContent='● 저장하지 않은 변경이 있습니다';}
+function clean(){DIRTY=false;var d=document.getElementById('dirty');if(d)d.textContent='';}
+function L(o){return (o&&typeof o==='object')?(o[LANG]||''):(o||'');}
+function T(path){return '<span class="ed" data-path="'+path+'.'+LANG+'">'+nl(get(path+'.'+LANG))+'</span>';}
+function S(path){return '<span class="ed" data-path="'+path+'">'+nl(get(path))+'</span>';}
+function show(o){return ADMIN || !!L(o);}
+function CTL(list,i){return '<span class="ctl">'
+ +'<button type="button" data-act="up" data-list="'+list+'" data-i="'+i+'" title="위로">↑</button>'
+ +'<button type="button" data-act="down" data-list="'+list+'" data-i="'+i+'" title="아래로">↓</button>'
+ +'<button type="button" class="del" data-act="del" data-list="'+list+'" data-i="'+i+'" title="삭제">✕</button></span>';}
+function ADD(list,tpl,label){return '<div class="addrow"><button type="button" class="addbtn" data-act="add" data-list="'+list+'" data-tpl="'+tpl+'">+ '+esc(label)+'</button></div>';}
+function bl(ko,en){return {ko:ko,en:en};}
+function href(h){return ADMIN?'':' href="'+esc(h)+'"';}
+function ko(){return LANG==='ko';}
+function boldPI(html){return ADMIN?html:html.replace(/(J\.-H\. Jung|J\. Jung|Jun-Hyung Jung)(\*)?/g,'<b>$1$2</b>');}
+function photoHTML(src,path,ph){
+  var inner = src ? '<img src="'+esc(src)+'" alt="" loading="lazy">' : '<div class="ph-empty">'+esc(ph)+'</div>';
+  return inner+'<span class="photobtns"><button type="button" data-act="photo" data-path="'+path+'">사진 선택</button>'
+   +'<button type="button" data-act="photopath" data-path="'+path+'">경로 입력</button>'
+   +(src?'<button type="button" data-act="photodel" data-path="'+path+'">지우기</button>':'')+'</span>';
+}
+function trace(){ /* decorative switching waveform for page headers */
+  var d='M0 70',x=0,hi=true;var w=[18,10,24,8,30,6,34,6,30,8,24,10,18,14,12,18,8,22,6,26,6,22,8,18,12,14];
+  for(var i=0;i<w.length;i++){x+=w[i];d+=' H'+x+' V'+(hi?30:70);hi=!hi;}
+  return '<svg class="trace" viewBox="0 0 '+x+' 100" preserveAspectRatio="none" aria-hidden="true"><path d="'+d+'" fill="none" stroke="#2F5A69" stroke-width="1.5"/></svg>';
+}
+function phead(key,title,sub){return '<div class="phead"><div class="wrap"><div class="k">'+esc(key)+'</div><h1>'+title+'</h1>'+(sub?'<p class="s">'+sub+'</p>':'')+'</div>'+trace()+'</div>';}
+
+var TPL = {
+  item:function(){return bl("새 항목","New item");},
+  area:function(){return {img:"",title:bl("새 연구 분야","New research area"),tag:bl("한 줄 설명","One-line description"),items:[bl("항목","Item")]};},
+  project:function(){return {img:"",status:"ongoing",period:"2027. 01. – 2029. 12.",sponsor:bl("발주기관 (예: 한국연구재단)","Sponsor (e.g., NRF)"),title:bl("과제명","Project title"),one:bl("과제 요약","Project summary")};},
+  tl:function(){return {period:"YYYY. MM.",title:bl("제목","Title"),org:bl("기관","Organization"),detail:bl("","")};},
+  member:function(){return {photo:"",name:bl("홍길동","Gil-Dong Hong"),role:bl("석사과정","M.S. Student"),email:"",bio:bl("연구 주제","Research topic")};},
+  group:function(){return {label:bl("새 그룹","New group"),members:[]};},
+  news:function(){var d=new Date();return {date:d.getFullYear()+'. '+String(d.getMonth()+1).padStart(2,'0')+'.',title:bl("소식 제목","News title"),body:bl("내용","Body")};},
+  pub:function(){return {text:"Authors, “Title,” Journal, vol. 0, no. 0, pp. 0–0, 2027.",url:""};},
+  year:function(){return {year:String(new Date().getFullYear()),items:[]};},
+  term:function(){return {label:bl("2027학년도 2학기","Fall 2027"),status:bl("개설 예정","Planned"),courses:[]};},
+  course:function(){return {title:bl("과목명","Course title"),level:"Undergraduate",tag:bl("",""),desc:bl("과목 설명","Course description"),files:[]};},
+  file:function(){var d=new Date();return {title:"Chapter N. Title",kind:"Lecture slides",version:"v1",updated:d.getFullYear()+'. '+String(d.getMonth()+1).padStart(2,'0')+'.',url:"files/lectures/FILE.pdf"};},
+  fact:function(){return {k:bl("항목","Item"),v:bl("내용","Value")};},
+  link:function(){return {label:"Link",url:"https://"};},
+  stat:function(){return {n:"0",label:bl("항목","Item")};}
+};
+
+/* ---------- pages ---------- */
+function renderNav(){
+  document.getElementById('brand-name').textContent=DATA.brand.name;
+  document.getElementById('brand-affil').textContent=DATA.brand.affil;
+  document.getElementById('nav').innerHTML=DATA.nav.map(function(n){return '<a href="#'+n.id+'" data-page="'+n.id+'"'+(n.id===PAGE?' class="on" aria-current="page"':'')+'>'+esc(L(n.label))+'</a>';}).join('');
+  document.getElementById('langbtn').textContent=ko()?'EN':'한국어';
+}
+
+function areaCards(){
+  return '<div class="areas">'+DATA.research.areas.map(function(a,i){var b='research.areas.'+i;
+    return '<div class="area"><div class="n">'+String(i+1).padStart(2,'0')+'</div><h3>'+T(b+'.title')+'</h3><p class="tag">'+T(b+'.tag')+'</p>'
+     +'<ul>'+a.items.map(function(it,j){return '<li>'+T(b+'.items.'+j)+'</li>';}).join('')+'</ul></div>';}).join('')+'</div>';
+}
+function newsList(items,base,compact){
+  return '<ul class="news'+(compact?' compact':'')+'">'+items.map(function(x,i){var b=base+'.'+i;
+    return '<li><span class="date">'+S(b+'.date')+'</span><span><span class="t">'+T(b+'.title')+'</span><div class="b">'+T(b+'.body')+'</div></span>'+(compact?'':CTL(base,i))+'</li>';}).join('')+'</ul>';
+}
+
+function renderHome(){
+  var h=DATA.home;
+  var focus=h.focus.map(function(f,i){return '<li>'+T('home.focus.'+i)+CTL('home.focus',i)+'</li>';}).join('');
+  var news=DATA.news.items.slice(0,3);
+  document.getElementById('p-home').innerHTML=
+   '<div class="hero"><div class="wrap">'
+  +'<p class="eyebrow">'+T('home.eyebrow')+'</p>'
+  +'<h1>'+T('home.title')+'</h1>'
+  +'<p class="en">'+S('home.en_name')+'</p>'
+  +'<p class="thesis">'+T('home.thesis')+'</p>'
+  +'<div class="recruit"><span class="tag">'+T('home.recruit_tag')+'</span><span class="txt">'+T('home.recruit')+'</span><a'+href('#join')+'>'+T('home.recruit_btn')+'</a></div>'
+  +'<svg class="pwm" viewBox="0 0 1200 300" role="img" aria-label="carrier-based PWM"><g fill="none" stroke-linecap="round">'
+  +'<line x1="0" y1="90" x2="1200" y2="90" stroke="#2A4A56" stroke-dasharray="2 6"/><line x1="0" y1="240" x2="1200" y2="240" stroke="#2A4A56" stroke-dasharray="2 6"/>'
+  +'<path id="carrier" stroke="#4E7381" stroke-width="1.2"/><path id="ref" stroke="#D9853F" stroke-width="2.4"/><path id="pulse" stroke="#CFDCDF" stroke-width="1.8"/></g></svg>'
+  +'<p class="pwm-cap">carrier-based PWM &nbsp;·&nbsp; v<sub>ref</sub> vs. v<sub>tri</sub> &nbsp;→&nbsp; switching function</p>'
+  +'</div></div>'
+  +'<div class="block"><div class="wrap">'
+  +'<div class="focus-grid"><div><h2 class="sec-h">'+(ko()?'주요 연구 분야':'Research Focus')+'<small>FOCUS</small></h2><ul class="focus">'+focus+'</ul>'+ADD('home.focus','item','연구 분야 추가')+'</div>'
+  +'<div><h2 class="sec-h">'+T('home.intro_h')+'<small>ABOUT</small></h2><p class="lede">'+T('home.intro')+'</p></div></div>'
+  +'<figure class="figure" style="margin-inline:0">'+photoHTML(h.figure,'home.figure','images/research_overview.png')+'<figcaption>'+T('home.figure_cap')+'</figcaption></figure>'
+  +'</div></div>'
+  +'<div class="block alt"><div class="wrap"><h2 class="sec-h">'+T('research.areas_h')+'<small>RESEARCH AREAS</small></h2>'+areaCards()
+  +'<a class="more"'+href('#research')+'>'+(ko()?'연구 소개 자세히 보기 →':'More on our research →')+'</a></div></div>'
+  +'<div class="block"><div class="wrap"><h2 class="sec-h">'+T('home.news_h')+'<small>NEWS</small></h2>'+newsList(news,'news.items',true)
+  +'<a class="more"'+href('#news')+'>'+(ko()?'전체 소식 보기 →':'All news →')+'</a></div></div>'
+  +joinBlock();
+  startPWM();
+}
+
+function renderNews(){
+  document.getElementById('p-news').innerHTML=phead('NEWS',T('news.heading'),ko()?'연구실의 새로운 소식':'What is happening at SPEED Lab')
+   +'<div class="block"><div class="wrap">'+newsList(DATA.news.items,'news.items',false)+ADD('news.items','news','소식 추가')+'</div></div>';
+}
+
+function renderResearch(){
+  var R=DATA.research;
+  var rows=R.areas.map(function(a,i){var b='research.areas.'+i;
+    var pic=(a.img||ADMIN)?'<div class="pic">'+photoHTML(a.img,b+'.img','그림 없음 — 사진 선택 또는 경로 입력'):'';
+    return '<div class="arow'+(pic?'':' nopic')+'">'+pic+(pic?'</div>':'')
+     +'<div><div class="n">AREA '+String(i+1).padStart(2,'0')+'</div><h3>'+T(b+'.title')+'</h3><p class="tag">'+T(b+'.tag')+'</p>'
+     +'<ul>'+a.items.map(function(it,j){return '<li class="rel">'+T(b+'.items.'+j)+'</li>';}).join('')+'</ul>'
+     +(ADMIN?ADD(b+'.items','item','항목 추가'):'')+'</div>'+CTL('research.areas',i)+'</div>';}).join('');
+  var pj=R.projects.length?'<div class="projects">'+R.projects.map(function(p,i){var b='research.projects.'+i;
+      var sel=ADMIN?'<div class="adm-field">상태 <select data-act="pstatus" data-i="'+i+'">'+['ongoing','completed','planned'].map(function(s){return '<option value="'+s+'"'+(p.status===s?' selected':'')+'>'+s+'</option>';}).join('')+'</select></div>':'';
+      var lab={ongoing:ko()?'진행 중':'Ongoing',completed:ko()?'완료':'Completed',planned:ko()?'예정':'Planned'}[p.status]||p.status;
+      return '<article class="proj"><div class="thumb">'+photoHTML(p.img,b+'.img','images/projects/....jpg')+'</div><div class="body">'
+       +'<span class="status '+esc(p.status)+'">'+esc(lab)+'</span>'+sel
+       +'<h3>'+T(b+'.title')+'</h3><p class="meta">'+T(b+'.sponsor')+' · '+S(b+'.period')+'</p><p class="one">'+T(b+'.one')+'</p>'
+       +'</div>'+CTL('research.projects',i)+'</article>';}).join('')+'</div>'
+    :'<div class="empty-box">'+T('research.projects_empty')+'</div>';
+  document.getElementById('p-research').innerHTML=phead('RESEARCH',T('research.heading'),T('research.lede'))
+   +'<div class="block"><div class="wrap"><h2 class="sec-h">'+T('research.areas_h')+'<small>AREAS</small></h2>'+rows+ADD('research.areas','area','연구 분야 추가')+'</div></div>'
+   +'<div class="block alt"><div class="wrap"><h2 class="sec-h">'+T('research.projects_h')+'<small>PROJECTS</small></h2>'+pj+ADD('research.projects','project','연구 과제 추가')+'</div></div>';
+}
+
+function tlList(path,arr){
+  return '<ul class="tl">'+arr.map(function(x,i){var b=path+'.'+i;
+    return '<li><span class="period">'+S(b+'.period')+'</span><span><span class="t">'+T(b+'.title')+'</span>'
+     +(show(x.org)?'<br><span class="o">'+T(b+'.org')+'</span>':'')
+     +(show(x.detail)?'<div class="d">'+T(b+'.detail')+'</div>':'')+'</span>'+CTL(path,i)+'</li>';}).join('')+'</ul>';
+}
+function renderProfessor(){
+  var p=DATA.professor;
+  function sec(hkey,key,label){var arr=p[key];if(!arr.length&&!ADMIN)return '';
+    return '<div class="cv-sec"><h3 class="list-h">'+T('professor.'+hkey)+'</h3>'+tlList('professor.'+key,arr)+ADD('professor.'+key,'tl',label+' 추가')+'</div>';}
+  var links=p.links.map(function(l,i){return ADMIN?'<span class="btn-o rel" style="padding-right:80px">'+S('professor.links.'+i+'.label')+' · '+S('professor.links.'+i+'.url')+CTL('professor.links',i)+'</span>'
+     :'<a class="btn-o" href="'+esc(l.url)+'" target="_blank" rel="noopener">'+esc(l.label)+' ↗</a>';}).join('');
+  document.getElementById('p-professor').innerHTML=phead('PROFESSOR',T('professor.heading'),'')
+   +'<div class="block"><div class="wrap">'
+   +'<div class="prof"><div class="portrait">'+photoHTML(p.photo,'professor.photo','images/members/....jpg')+'</div>'
+   +'<div><h2>'+T('professor.name')+'</h2><p class="nsub">'+T('professor.name_sub')+'</p>'
+   +'<p class="title">'+T('professor.title')+'</p><p class="dept">'+T('professor.dept')+'</p>'
+   +'<dl class="contact-list"><dt>EMAIL</dt><dd>'+(ADMIN?S('professor.email'):'<a href="mailto:'+esc(p.email)+'">'+esc(p.email)+'</a>')+'</dd>'
+   +'<dt>TEL</dt><dd>'+S('professor.phone')+'</dd><dt>OFFICE</dt><dd>'+T('professor.room')+'</dd></dl>'
+   +'<div class="btnrow"><a class="btn-o dark"'+href(p.cv_url)+' target="_blank" rel="noopener">⇩ CV (PDF)</a>'+links+'</div>'
+   +(ADMIN?ADD('professor.links','link','링크 추가')+'<div class="adm-field">CV 파일 경로: '+S('professor.cv_url')+'</div>':'')
+   +'<div class="interests"><h3 class="list-h">'+T('professor.interests_h')+'</h3><ul>'+p.interests.map(function(x,i){return '<li class="rel">'+T('professor.interests.'+i)+'</li>';}).join('')+'</ul>'+ADD('professor.interests','item','항목 추가')+'</div>'
+   +'</div></div>'
+   +sec('career_h','career','경력')+sec('edu_h','education','학력')+sec('grants_h','grants','연구과제')
+   +sec('activities_h','activities','활동')+sec('teach_h','teaching','강의 경력')+sec('patents_h','patents','특허')+sec('supervision_h','supervision','지도 논문')
+   +'</div></div>';
+}
+
+function renderMembers(){
+  var g=DATA.members.groups.map(function(gr,gi){var gp='members.groups.'+gi;
+    var body=gr.members.length?'<div class="mgrid">'+gr.members.map(function(m,i){var b=gp+'.members.'+i;
+      return '<div class="mcard"><div class="ph">'+photoHTML(m.photo,b+'.photo','photo')+'</div><b>'+T(b+'.name')+'</b><div class="sub">'+T(b+'.role')+'</div><div class="bio">'+T(b+'.bio')+'</div><div class="mail">'+S(b+'.email')+'</div>'+CTL(gp+'.members',i)+'</div>';}).join('')+'</div>'
+      :'<p class="empty-note">'+T('members.empty')+'</p>';
+    return '<div class="pgroup"><h3 class="list-h">'+T(gp+'.label')+CTL('members.groups',gi)+'</h3>'+body+ADD(gp+'.members','member','구성원 추가')+'</div>';}).join('');
+  document.getElementById('p-members').innerHTML=phead('MEMBERS',T('members.heading'),'')
+   +'<div class="block"><div class="wrap">'+g+ADD('members.groups','group','그룹 추가')+'</div></div>'+joinBlock();
+}
+
+function pubList(path,items){
+  return '<ol class="pubs">'+items.map(function(it,i){var b=path+'.'+i;
+    var t=boldPI('<span class="ed" data-path="'+b+'.text">'+nl(it.text)+'</span>');
+    var u=(it.url&&!ADMIN)?'<a class="lk" href="'+esc(it.url)+'" target="_blank" rel="noopener">LINK</a>':'';
+    var ue=ADMIN?'<div class="adm-field">URL(DOI): '+S(b+'.url')+'</div>':'';
+    return '<li>'+t+u+ue+CTL(path,i)+'</li>';}).join('')+'</ol>';
+}
+function yearBlocks(base,years){
+  return years.map(function(y,i){var b=base+'.'+i;
+    return '<div class="yr"><h4 class="rel">'+S(b+'.year')+(ADMIN?'<div class="ctl" style="position:static;margin-top:6px">'+CTL(base,i)+'</div>':'')+'</h4><div>'+pubList(b+'.items',y.items)+ADD(b+'.items','pub','논문 추가')+'</div></div>';}).join('');
+}
+function countItems(years){return years.reduce(function(s,y){return s+y.items.length;},0);}
+function renderPubs(){
+  var P=DATA.publications;
+  var stats='<div class="stats">'+P.stats.map(function(s,i){return '<div class="stat"><div class="n">'+S('publications.stats.'+i+'.n')+'</div><div class="l">'+T('publications.stats.'+i+'.label')+'</div>'+CTL('publications.stats',i)+'</div>';}).join('')+'</div>'+ADD('publications.stats','stat','통계 항목 추가');
+  var tabs=[['all',ko()?'전체':'All'],['journal','Journal ('+countItems(P.journals)+')'],['conf','Conference ('+countItems(P.conferences)+')']];
+  var tabH=ADMIN?'':'<div class="pubtabs" role="tablist">'+tabs.map(function(t){return '<button type="button" data-pubtab="'+t[0]+'" class="'+(PUBTAB===t[0]?'on':'')+'">'+esc(t[1])+'</button>';}).join('')+'</div>';
+  var showJ=ADMIN||PUBTAB!=='conf', showC=ADMIN||PUBTAB!=='journal';
+  document.getElementById('p-publications').innerHTML=phead('PUBLICATIONS',T('publications.heading'),'')
+   +'<div class="block"><div class="wrap">'+stats
+   +'<p class="pubnote">'+S('publications.legend')+' &nbsp;·&nbsp; '+S('publications.updated')+'</p>'+tabH
+   +(showJ?'<div class="pubsec">'+((P.review.length||ADMIN)?'<h3 class="list-h">'+T('publications.review_h')+'</h3>'+pubList('publications.review',P.review)+ADD('publications.review','pub','항목 추가')+'<div style="height:34px"></div>':'')
+     +'<h3 class="list-h">'+T('publications.journals_h')+'</h3>'+yearBlocks('publications.journals',P.journals)+ADD('publications.journals','year','연도 추가')+'</div>':'')
+   +(showC?'<div class="pubsec"><h3 class="list-h">'+T('publications.conf_h')+'</h3>'+yearBlocks('publications.conferences',P.conferences)+ADD('publications.conferences','year','연도 추가')+'</div>':'')
+   +'</div></div>';
+}
+
+function renderLecture(){
+  var Lx=DATA.lecture;
+  var terms=Lx.terms.map(function(tm,ti){var tb='lecture.terms.'+ti;
+    var planned=/예정|plan/i.test(tm.status.ko+tm.status.en);
+    var cs=tm.courses.map(function(co,i){var b=tb+'.courses.'+i;
+      var files=co.files.map(function(f,j){var fb=b+'.files.'+j;
+        var meta=[f.kind,f.version,f.updated?'updated '+f.updated:''].filter(Boolean).join(' · ');
+        return '<li><span class="ft">'+S(fb+'.title')+'</span><span class="fm">'+(ADMIN?S(fb+'.kind')+' · '+S(fb+'.version')+' · '+S(fb+'.updated'):esc(meta))+'</span>'
+         +'<a class="dl"'+href(f.url)+' target="_blank" rel="noopener">⇩ PDF</a>'+(ADMIN?'<div class="adm-field" style="width:100%">파일 경로: '+S(fb+'.url')+'</div>':'')+CTL(b+'.files',j)+'</li>';}).join('');
+      return '<div class="course"><h4>'+T(b+'.title')+(ko()?'<span class="en">'+esc(co.title.en)+'</span>':'')
+        +(show(co.tag)?'<span class="badge new">'+T(b+'.tag')+'</span>':'')+'<span class="lvl">'+S(b+'.level')+'</span></h4>'
+        +'<p class="desc">'+T(b+'.desc')+'</p>'
+        +(files?'<ul class="files">'+files+'</ul>':(planned?'':'<p class="nofiles">'+T('lecture.empty_files')+'</p>'))
+        +ADD(b+'.files','file','강의자료 추가')+CTL(tb+'.courses',i)+'</div>';}).join('');
+    return '<div class="term"><div class="term-h"><h3>'+T(tb+'.label')+'</h3><span class="badge'+(planned?' plan':'')+'">'+T(tb+'.status')+'</span>'+CTL('lecture.terms',ti)+'</div>'+cs+ADD(tb+'.courses','course','과목 추가')+'</div>';}).join('');
+  document.getElementById('p-lecture').innerHTML=phead('LECTURE',T('lecture.heading'),T('lecture.intro'))
+   +'<div class="block"><div class="wrap">'+terms+ADD('lecture.terms','term','학기 추가')+'</div></div>';
+}
+
+function joinBlock(){
+  return '<div class="join block" id="join"><div class="wrap"><h2>'+T('join.heading')+'</h2><p class="lede">'+T('join.lede')+'</p>'
+   +'<a class="btn"'+href('mailto:'+DATA.professor.email+'?subject=[SPEED Lab] ')+'>'+T('join.btn')+' →</a></div></div>';
+}
+
+function renderContact(){
+  var f=DATA.contact.facts.map(function(x,i){var b='contact.facts.'+i;return '<div class="row"><span class="k">'+T(b+'.k')+'</span><span class="v">'+T(b+'.v')+'</span>'+CTL('contact.facts',i)+'</div>';}).join('');
+  var map=DATA.contact.mapEmbed||'<span>'+(ko()?'지도 — 관리자 모드에서 지도 iframe 코드를 붙여넣으세요':'map')+'</span>';
+  var ed=ADMIN?'<div class="adm-field">지도 iframe 코드 (구글지도 → 공유 → 지도 퍼가기)<textarea id="mapedit">'+esc(DATA.contact.mapEmbed)+'</textarea></div>':'';
+  document.getElementById('p-contact').innerHTML=phead('CONTACT',T('contact.heading'),'')
+   +'<div class="block"><div class="wrap"><div class="contact-grid"><div><div class="facts">'+f+'</div>'+ADD('contact.facts','fact','항목 추가')+'</div><div><div class="mapbox">'+map+'</div>'+ed+'</div></div></div></div>';
+}
+function renderFooter(){
+  document.getElementById('footer-body').innerHTML='<span><b>'+esc(DATA.brand.name)+'</b> · '+esc(DATA.home.en_name)+'</span><span>'+T('footer.line')+'</span><span>'+S('footer.copyright')+'</span>';
+}
+
+var RENDER={home:renderHome,news:renderNews,research:renderResearch,professor:renderProfessor,members:renderMembers,publications:renderPubs,lecture:renderLecture,contact:renderContact};
+function renderAll(){
+  renderNav();
+  PAGES.forEach(function(p){RENDER[p]();document.getElementById('p-'+p).classList.toggle('on',p===PAGE);});
+  if(PAGE!=='home'&&pwmRAF){cancelAnimationFrame(pwmRAF);pwmRAF=null;}
+  renderFooter();
+  var eds=document.querySelectorAll('.ed');
+  for(var i=0;i<eds.length;i++){ if(ADMIN){eds[i].setAttribute('contenteditable','true');eds[i].setAttribute('spellcheck','false');} else eds[i].removeAttribute('contenteditable'); }
+  document.title=(PAGE==='home'?'':L(DATA.nav[PAGES.indexOf(PAGE)].label)+' · ')+'SPEED Lab | PKNU';
+}
+
+/* ---------- routing ---------- */
+function route(){
+  var h=(location.hash||'#home').slice(1);
+  if(h==='admin'){setAdmin(true);return;}
+  if(h==='join'){PAGE='members';renderAll();setTimeout(function(){var j=document.querySelector('#p-members #join');if(j)j.scrollIntoView();},30);return;}
+  PAGE=PAGES.indexOf(h)>=0?h:'home';
+  renderAll();window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+
+/* ---------- events ---------- */
+document.addEventListener('input',function(ev){var el=ev.target;
+  if(el.classList&&el.classList.contains('ed')&&ADMIN){setp(el.getAttribute('data-path'),el.innerText.replace(/ /g,' ').replace(/\n$/,''));}
+  if(el.id==='mapedit'){DATA.contact.mapEmbed=el.value;dirty();}
+});
+document.addEventListener('change',function(ev){var t=ev.target;
+  if(t.getAttribute&&t.getAttribute('data-act')==='pstatus'){DATA.research.projects[+t.getAttribute('data-i')].status=t.value;dirty();renderAll();}
+});
+document.addEventListener('click',function(ev){
+  var tb=ev.target.closest?ev.target.closest('[data-pubtab]'):null;
+  if(tb){PUBTAB=tb.getAttribute('data-pubtab');renderPubs();return;}
+  var b=ev.target.closest?ev.target.closest('[data-act]'):null; if(!b||!ADMIN)return;
+  var act=b.getAttribute('data-act'); if(act==='pstatus')return;
+  ev.preventDefault();
+  var lp=b.getAttribute('data-list'), i=parseInt(b.getAttribute('data-i'),10), arr=lp?get(lp):null;
+  if(act==='up'&&i>0){arr.splice(i-1,0,arr.splice(i,1)[0]);}
+  else if(act==='down'&&arr&&i<arr.length-1){arr.splice(i+1,0,arr.splice(i,1)[0]);}
+  else if(act==='del'){if(!confirm('이 항목을 삭제할까요?'))return;arr.splice(i,1);}
+  else if(act==='add'){var tpl=b.getAttribute('data-tpl');if(/\.(journals|conferences)$/.test(lp)&&tpl==='year')arr.unshift(TPL.year());else if(lp==='news.items')arr.unshift(TPL.news());else arr.push(TPL[tpl]());}
+  else if(act==='photo'){pickPhoto(b.getAttribute('data-path'));return;}
+  else if(act==='photopath'){var p=prompt('이미지 경로를 입력하세요 (예: images/members/hong.jpg). 파일은 저장소의 같은 경로에 올려야 합니다.',get(b.getAttribute('data-path'))||'');if(p===null)return;setp(b.getAttribute('data-path'),p.trim());}
+  else if(act==='photodel'){setp(b.getAttribute('data-path'),'');}
+  else return;
+  dirty();renderAll();
+});
+function pickPhoto(path){
+  var inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=function(){var f=inp.files&&inp.files[0];if(!f)return;var rd=new FileReader();
+    rd.onload=function(){var img=new Image();img.onload=function(){var max=900,s=Math.min(1,max/Math.max(img.width,img.height));
+      var cv=document.createElement('canvas');cv.width=Math.round(img.width*s);cv.height=Math.round(img.height*s);
+      var cx=cv.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);cx.drawImage(img,0,0,cv.width,cv.height);
+      setp(path,cv.toDataURL('image/jpeg',0.84));renderAll();};img.src=rd.result;};
+    rd.readAsDataURL(f);};
+  inp.click();
+}
+document.getElementById('langbtn').addEventListener('click',function(){LANG=ko()?'en':'ko';document.documentElement.lang=LANG;try{localStorage.setItem('speed-lang',LANG);}catch(e){}renderAll();});
+
+/* ---------- save ---------- */
+function download(text,name,mime){var b=new Blob([text],{type:mime+';charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);}
+function buildHTML(){var json=JSON.stringify(DATA,null,1).replace(/</g,'\\u003c');
+  return '<!DOCTYPE html>\n'+TEMPLATE.replace(/(<script type="application\/json" id="site-data">)[\s\S]*?(<\/script>)/,function(m,a,b){return a+'\n'+json+'\n'+b;});}
+document.getElementById('btn-save').addEventListener('click',function(){download(buildHTML(),'index.html','text/html');clean();alert('index.html 을 내려받았습니다.\nGitHub 저장소에서 Add file → Upload files 로 같은 이름의 index.html 을 올리고 Commit 하면 1~2분 뒤 사이트에 반영됩니다.');});
+document.getElementById('btn-json').addEventListener('click',function(){var d=new Date().toISOString().slice(0,10).replace(/-/g,'');download(JSON.stringify(DATA,null,1),'speedlab-backup-'+d+'.json','application/json');});
+document.getElementById('btn-load').addEventListener('click',function(){var inp=document.createElement('input');inp.type='file';inp.accept='.json,application/json';
+  inp.onchange=function(){var f=inp.files&&inp.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{DATA=JSON.parse(rd.result);dirty();renderAll();alert('백업을 불러왔습니다.');}catch(e){alert('JSON 파일을 읽지 못했습니다: '+e.message);}};rd.readAsText(f);};inp.click();});
+document.getElementById('btn-exit').addEventListener('click',function(){if(DIRTY&&!confirm('저장하지 않은 변경이 있습니다. 그래도 종료할까요?'))return;setAdmin(false);});
+function setAdmin(on){ADMIN=on;document.body.classList.toggle('admin',on);
+  if(location.hash==='#admin')history.replaceState(null,'','#'+PAGE);
+  renderAll();}
+window.addEventListener('beforeunload',function(e){if(DIRTY){e.preventDefault();e.returnValue='';}});
+document.addEventListener('keydown',function(e){if(e.ctrlKey&&e.shiftKey&&(e.key==='A'||e.key==='a')){e.preventDefault();setAdmin(!ADMIN);}});
+
+/* ---------- PWM animation ---------- */
+var pwmRAF=null;
+function startPWM(){
+  var W=1200,N=600,CY=2,MF=15,TOP=90,AMP=62,HI=200,LO=268;
+  var refEl=document.getElementById('ref'),carEl=document.getElementById('carrier'),pulEl=document.getElementById('pulse');if(!refEl)return;
+  if(pwmRAF){cancelAnimationFrame(pwmRAF);pwmRAF=null;}
+  function tri(p){p=p-Math.floor(p);return 1-4*Math.abs(p-0.5);}
+  function draw(ph){var r=[],c=[],p=[],prev=null;
+    for(var i=0;i<=N;i++){var x=i*W/N,u=i/N,rf=0.88*Math.sin(2*Math.PI*CY*u+ph),cr=tri(CY*MF*u);
+      r.push((i?'L':'M')+x.toFixed(1)+' '+(TOP-AMP*rf).toFixed(1));c.push((i?'L':'M')+x.toFixed(1)+' '+(TOP-AMP*cr).toFixed(1));
+      var s=rf>cr?HI:LO;if(prev===null)p.push('M'+x.toFixed(1)+' '+s);else if(s!==prev)p.push('L'+x.toFixed(1)+' '+prev,'L'+x.toFixed(1)+' '+s);else p.push('L'+x.toFixed(1)+' '+s);prev=s;}
+    refEl.setAttribute('d',r.join(' '));carEl.setAttribute('d',c.join(' '));pulEl.setAttribute('d',p.join(' '));}
+  draw(0);if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var ph=0,last=0;(function frame(t){if(t-last>33){ph+=0.024;draw(ph);last=t;}pwmRAF=requestAnimationFrame(frame);})(0);
+}
+
+document.documentElement.lang=LANG;
+route();
+</script>
+</body>
+</html>
