@@ -58,8 +58,12 @@ nav.main a.on{color:#fff;border-bottom-color:var(--copper-lt)}
 .langbtn:hover{border-color:#fff;color:#fff}
 @media(max-width:960px){
   .bar-in{height:auto;flex-wrap:wrap;padding-top:10px;gap:4px 12px}
-  nav.main{order:3;width:100%;margin-left:0;gap:18px}
-  nav.main a{padding:8px 0 10px}
+  nav.main{order:3;width:100%;margin-left:0;gap:0 20px;flex-wrap:wrap;overflow:visible}
+  nav.main a{padding:7px 0 8px}
+}
+@media(max-width:560px){
+  nav.main{display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between;gap:0 8px}
+  nav.main a{font-size:14px}
   .langbtn{margin-left:auto}
 }
 
