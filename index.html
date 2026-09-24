@@ -88,8 +88,10 @@ nav.main a.on{color:#fff;border-bottom-color:var(--copper-lt)}
 .recruit .tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;background:var(--copper);color:#fff;padding:4px 8px;border-radius:2px;white-space:nowrap}
 .recruit .txt{flex:1 1 260px;font-size:15px;color:#DCE5E7;min-width:0}
 .recruit a{text-decoration:none;font-size:14px;padding:9px 16px;border-radius:2px;background:#fff;color:var(--deep);font-weight:700;white-space:nowrap}
-.pwm{margin-top:clamp(30px,5vw,52px);width:100%;height:auto;display:block}
-.pwm-cap{font-family:var(--mono);font-size:11px;color:#7E98A1;padding:6px 0 18px}
+.pwm{margin-top:clamp(26px,4.5vw,48px);width:100%;height:auto;display:block;overflow:visible}
+.pwm-cap{display:grid;grid-template-columns:21% 1fr 25%;gap:10px;font-family:var(--mono);font-size:11px;color:#7E98A1;padding:8px 0 20px}
+.pwm-cap span:nth-child(2){text-align:center}.pwm-cap span:last-child{text-align:right}
+@media(max-width:620px){.pwm-cap{font-size:9.5px;gap:4px}}
 
 /* focus + intro */
 .focus-grid{display:grid;gap:clamp(26px,4vw,56px);grid-template-columns:1fr}
@@ -159,7 +161,11 @@ nav.main a.on{color:#fff;border-bottom-color:var(--copper-lt)}
 .btn-o.dark{background:var(--ink);color:#fff}
 .btn-o.dark:hover{background:var(--copper);border-color:var(--copper)}
 .interests{margin-top:22px}
-.interests ul{margin:8px 0 0;padding-left:18px;font-size:14.5px;color:var(--ink-70)}
+.interests ol{list-style:none;margin:6px 0 0;padding:0;counter-reset:ri}
+.interests li{counter-increment:ri;display:grid;grid-template-columns:30px 1fr;padding:9px 0;border-bottom:1px solid var(--line);position:relative}
+.interests li::before{content:counter(ri,decimal-leading-zero);font-family:var(--mono);font-size:11.5px;color:var(--copper);padding-top:3px}
+.interests .it{font-weight:700;font-size:15px}
+.interests .is{display:block;font-size:13.5px;color:var(--ink-50);margin-top:1px}
 .cv-sec{margin-top:clamp(34px,5vw,52px)}
 .tl{list-style:none;margin:0;padding:0}
 .tl li{display:grid;grid-template-columns:1fr;gap:2px 22px;padding:14px 0;border-bottom:1px solid var(--line);position:relative}
@@ -393,7 +399,7 @@ body.admin .adm-field{display:block}
  ],
  "home": {
   "eyebrow": {
-   "ko": "국립부경대학교 공과대학 · 제어계측공학전공",
+   "ko": "국립부경대학교 · 전기공학부 제어계측공학전공",
    "en": "Pukyong National University · Control & Instrumentation Engineering"
   },
   "title": {
@@ -445,8 +451,8 @@ body.admin .adm-field{display:block}
    "en": "RECRUITING"
   },
   "recruit": {
-   "ko": "전동기 드라이브, 대전력 전력변환, 그리고 AI를 함께 연구할 학부연구생·대학원생을 찾습니다.",
-   "en": "We are looking for undergraduate and graduate students to work on motor drives, high-power conversion and AI."
+   "ko": "전동기 드라이브, 전력반도체 신뢰성, 그리고 Edge AI 임베디드 시스템을 함께 연구할 학부연구생·대학원생을 찾습니다.",
+   "en": "We are looking for undergraduate and graduate students to work on motor drives, power-semiconductor reliability and Edge-AI embedded systems."
   },
   "recruit_btn": {
    "ko": "지원 안내",
@@ -495,8 +501,8 @@ body.admin .adm-field{display:block}
       "en": "Intelligent fault diagnosis and fault-tolerant control"
      },
      {
-      "ko": "Edge AI 기반 실시간 추정·제어",
-      "en": "Edge-AI real-time estimation and control"
+      "ko": "Edge AI 임베디드 모터 드라이브 (실시간 추정·제어)",
+      "en": "Edge-AI embedded motor drives (real-time estimation and control)"
      }
     ]
    },
@@ -512,25 +518,25 @@ body.admin .adm-field{display:block}
     },
     "items": [
      {
-      "ko": "대용량(멀티레벨·병렬) 전력변환 시스템 설계 및 운전",
-      "en": "Design and operation of multilevel and parallel converter systems"
+      "ko": "멀티레벨·멀티포트 컨버터 설계 및 제어",
+      "en": "Design and control of multilevel and multiport converters"
      },
      {
-      "ko": "병렬 컨버터 순환전류 억제",
-      "en": "Circulating-current suppression in parallel converters"
+      "ko": "병렬 컨버터 순환전류 억제 · 공통모드 전압·EMI 저감",
+      "en": "Circulating-current suppression, common-mode voltage and EMI reduction"
      },
      {
-      "ko": "공통모드 전압·EMI 저감 변조 기법",
-      "en": "Modulation for common-mode voltage and EMI reduction"
+      "ko": "EV 급속충전 · ESS · SST(반도체 변압기)",
+      "en": "EV fast charging, ESS and solid-state transformers (SST)"
      },
      {
-      "ko": "선박 전기추진 · 대전력 EV 충전 인프라",
-      "en": "Ship electric propulsion and high-power EV charging"
+      "ko": "AI 데이터센터 전력공급 · 선박 전기추진",
+      "en": "Power supply for AI data centers and ship electric propulsion"
      }
     ]
    },
    {
-    "img": "",
+    "img": "images/research3.png",
     "title": {
      "ko": "AI for Power & Energy Systems",
      "en": "AI for Power & Energy Systems"
@@ -588,8 +594,8 @@ body.admin .adm-field{display:block}
    "en": "Assistant Professor"
   },
   "dept": {
-   "ko": "국립부경대학교 제어계측공학전공",
-   "en": "Major of Control & Instrumentation Engineering, Division of Electrical Engineering, Pukyong National University"
+   "ko": "국립부경대학교\n전기공학부 제어계측공학전공",
+   "en": "Pukyong National University\nMajor of Control & Instrumentation Engineering, Division of Electrical Engineering"
   },
   "email": "jh.jung@pknu.ac.kr",
   "phone": "+82-51-629-6329",
@@ -623,24 +629,54 @@ body.admin .adm-field{display:block}
   },
   "interests": [
    {
-    "ko": "병렬 운전 PWM 컨버터 기반 대용량 전력변환 시스템",
-    "en": "High-power conversion systems with parallel operation of PWM converters"
+    "t": {
+     "ko": "전동기 드라이브 시스템 및 정밀 제어",
+     "en": "Motor drive systems and precision control"
+    },
+    "s": {
+     "ko": "Edge AI 기반 지능형 모터 드라이브 — 임베디드 AI 추정기·제어기의 실시간 구현",
+     "en": "Motor drives with Edge AI — real-time embedded AI estimators and controllers"
+    }
    },
    {
-    "ko": "중전압(MV) 계통연계 AC-DC 멀티레벨 컨버터",
-    "en": "Grid-connected AC-DC multilevel converters for medium-voltage applications"
+    "t": {
+     "ko": "대용량 전력변환 시스템 (멀티레벨·멀티포트 컨버터)",
+     "en": "High-power conversion systems (multilevel and multiport converters)"
+    },
+    "s": {
+     "ko": "EV 급속충전, ESS, SST(반도체 변압기), AI 데이터센터 전력공급",
+     "en": "EV fast charging, ESS, solid-state transformers (SST) and power supply for AI data centers"
+    }
    },
    {
-    "ko": "MV 메가와트급 반도체 변압기(SST)",
-    "en": "MV megawatt solid-state transformers for modern grid systems"
+    "t": {
+     "ko": "전력반도체 열 특성 관측·추정 및 능동 열관리",
+     "en": "Thermal monitoring, estimation and active thermal control of power semiconductors"
+    },
+    "s": {
+     "ko": "접합온도 측정·AI 기반 추정, 노화 진단 및 수명 예측, 능동 열제어(ATC)",
+     "en": "Junction-temperature measurement and AI-based estimation, aging diagnosis, lifetime prediction and active thermal control (ATC)"
+    }
    },
    {
-    "ko": "MW급 EV 충전·ESS용 MVDC DC-DC 컨버터",
-    "en": "MVDC DC-DC converters for MW EV charging infrastructure and ESS"
+    "t": {
+     "ko": "전력변환장치의 지능형 고장 진단 및 고장 허용 제어",
+     "en": "Intelligent fault diagnosis and fault-tolerant control of power converters"
+    },
+    "s": {
+     "ko": "디지털 트윈과 머신러닝 기반 상태 감시",
+     "en": "Condition monitoring with digital twins and machine learning"
+    }
    },
    {
-    "ko": "AI × Energy & Power: 전력·에너지 응용을 위한 강화학습",
-    "en": "AI × Energy & Power: reinforcement learning for power electronics and energy"
+    "t": {
+     "ko": "강화학습 기반 전력·에너지 시스템 운용",
+     "en": "Reinforcement-learning-based operation of power and energy systems"
+    },
+    "s": {
+     "ko": "배터리 SOC·온도 밸런싱, EV 충전 스테이션 에너지 관리",
+     "en": "Battery SOC and temperature balancing, energy management of EV charging stations"
+    }
    }
   ],
   "career_h": {
@@ -655,7 +691,7 @@ body.admin .adm-field{display:block}
      "en": "Assistant Professor"
     },
     "org": {
-     "ko": "국립부경대학교 제어계측공학전공",
+     "ko": "국립부경대학교 전기공학부 제어계측공학전공",
      "en": "Pukyong National University, Major of Control & Instrumentation Engineering"
     },
     "detail": {
@@ -1596,6 +1632,7 @@ function phead(key,title,sub){return '<div class="phead"><div class="wrap"><div 
 
 var TPL = {
   item:function(){return bl("새 항목","New item");},
+  interest:function(){return {t:bl("연구 관심사","Research interest"),s:bl("세부 내용","Details")};},
   area:function(){return {img:"",title:bl("새 연구 분야","New research area"),tag:bl("한 줄 설명","One-line description"),items:[bl("항목","Item")]};},
   project:function(){return {img:"",status:"ongoing",period:"2027. 01. – 2029. 12.",sponsor:bl("발주기관 (예: 한국연구재단)","Sponsor (e.g., NRF)"),title:bl("과제명","Project title"),one:bl("과제 요약","Project summary")};},
   tl:function(){return {period:"YYYY. MM.",title:bl("제목","Title"),org:bl("기관","Organization"),detail:bl("","")};},
@@ -1641,10 +1678,8 @@ function renderHome(){
   +'<p class="en">'+S('home.en_name')+'</p>'
   +'<p class="thesis">'+T('home.thesis')+'</p>'
   +'<div class="recruit"><span class="tag">'+T('home.recruit_tag')+'</span><span class="txt">'+T('home.recruit')+'</span><a'+href('#join')+'>'+T('home.recruit_btn')+'</a></div>'
-  +'<svg class="pwm" viewBox="0 0 1200 300" role="img" aria-label="carrier-based PWM"><g fill="none" stroke-linecap="round">'
-  +'<line x1="0" y1="90" x2="1200" y2="90" stroke="#2A4A56" stroke-dasharray="2 6"/><line x1="0" y1="240" x2="1200" y2="240" stroke="#2A4A56" stroke-dasharray="2 6"/>'
-  +'<path id="carrier" stroke="#4E7381" stroke-width="1.2"/><path id="ref" stroke="#D9853F" stroke-width="2.4"/><path id="pulse" stroke="#CFDCDF" stroke-width="1.8"/></g></svg>'
-  +'<p class="pwm-cap">carrier-based PWM &nbsp;·&nbsp; v<sub>ref</sub> vs. v<sub>tri</sub> &nbsp;→&nbsp; switching function</p>'
+  +heroSVG()
+  +'<p class="pwm-cap"><span>AI · neural network (Edge AI)</span><span>carrier-based PWM · v<sub>ref</sub> vs. v<sub>tri</sub> → gate signal</span><span>PMSM · stator &amp; rotor</span></p>'
   +'</div></div>'
   +'<div class="block"><div class="wrap">'
   +'<div class="focus-grid"><div><h2 class="sec-h">'+(ko()?'주요 연구 분야':'Research Focus')+'<small>FOCUS</small></h2><ul class="focus">'+focus+'</ul>'+ADD('home.focus','item','연구 분야 추가')+'</div>'
@@ -1706,7 +1741,7 @@ function renderProfessor(){
    +'<dt>TEL</dt><dd>'+S('professor.phone')+'</dd><dt>OFFICE</dt><dd>'+T('professor.room')+'</dd></dl>'
    +'<div class="btnrow"><a class="btn-o dark"'+href(p.cv_url)+' target="_blank" rel="noopener">⇩ CV (PDF)</a>'+links+'</div>'
    +(ADMIN?ADD('professor.links','link','링크 추가')+'<div class="adm-field">CV 파일 경로: '+S('professor.cv_url')+'</div>':'')
-   +'<div class="interests"><h3 class="list-h">'+T('professor.interests_h')+'</h3><ul>'+p.interests.map(function(x,i){return '<li class="rel">'+T('professor.interests.'+i)+'</li>';}).join('')+'</ul>'+ADD('professor.interests','item','항목 추가')+'</div>'
+   +'<div class="interests"><h3 class="list-h">'+T('professor.interests_h')+'</h3><ol>'+p.interests.map(function(x,i){var b='professor.interests.'+i;return '<li><span><span class="it">'+T(b+'.t')+'</span>'+(show(x.s)?'<span class="is">'+T(b+'.s')+'</span>':'')+'</span>'+CTL('professor.interests',i)+'</li>';}).join('')+'</ol>'+ADD('professor.interests','interest','항목 추가')+'</div>'
    +'</div></div>'
    +sec('career_h','career','경력')+sec('edu_h','education','학력')+sec('grants_h','grants','연구과제')
    +sec('activities_h','activities','활동')+sec('teach_h','teaching','강의 경력')+sec('patents_h','patents','특허')+sec('supervision_h','supervision','지도 논문')
@@ -1859,19 +1894,96 @@ window.addEventListener('beforeunload',function(e){if(DIRTY){e.preventDefault();
 document.addEventListener('keydown',function(e){if(e.ctrlKey&&e.shiftKey&&(e.key==='A'||e.key==='a')){e.preventDefault();setAdmin(!ADMIN);}});
 
 /* ---------- PWM animation ---------- */
+/* ---------- hero animation: AI (brain) -> CBPWM -> motor ---------- */
 var pwmRAF=null;
+var HERO={W:1400,H:300,
+  brain:{lobes:[[120,128,78,62],[190,104,80,62],[248,146,52,52],[168,178,82,40],[236,206,32,20]]},
+  pwm:{x0:360,x1:1010,TOP:112,AMP:58,HI:222,LO:268,CY:2,MF:9},
+  motor:{cx:1250,cy:150,Ro:122,Ri:86,Rr:66}};
+function rng(seed){return function(){seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};}
+function inBrain(x,y,m){var L=HERO.brain.lobes;for(var i=0;i<L.length;i++){var dx=(x-L[i][0])/(L[i][2]-m),dy=(y-L[i][1])/(L[i][3]-m);if(dx*dx+dy*dy<=1)return true;}return false;}
+function brainNet(){
+  if(HERO.net)return HERO.net;
+  var r=rng(7),N=[],tries=0;
+  while(N.length<44&&tries<5000){tries++;var x=40+r()*250,y=45+r()*180;if(!inBrain(x,y,10))continue;
+    var ok=true;for(var i=0;i<N.length;i++){var dx=N[i][0]-x,dy=N[i][1]-y;if(dx*dx+dy*dy<22*22){ok=false;break;}}if(ok)N.push([x,y]);}
+  var E=[],seen={};
+  N.forEach(function(p,i){var d=N.map(function(q,j){return [(q[0]-p[0])*(q[0]-p[0])+(q[1]-p[1])*(q[1]-p[1]),j];}).sort(function(a,b){return a[0]-b[0];});
+    for(var k=1;k<=3&&k<d.length;k++){var j=d[k][1],key=Math.min(i,j)+'-'+Math.max(i,j);if(!seen[key]&&d[k][0]<55*55){seen[key]=1;E.push([i,j]);}}});
+  HERO.net={N:N,E:E,phase:N.map(function(){return r()*6.28;}),rate:N.map(function(){return 0.6+r()*1.6;})};return HERO.net;
+}
+function heroSVG(){
+  var h=HERO,net=brainNet(),m=h.motor,o='';
+  o+='<svg class="pwm" viewBox="0 0 '+h.W+' '+h.H+'" role="img" aria-label="AI, carrier-based PWM and a rotating motor">';
+  o+='<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
+    +'<radialGradient id="rotg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#274E5C"/><stop offset="1" stop-color="#173845"/></radialGradient>'
+    +'<marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#D9853F"/></marker></defs>';
+  /* brain: stroke union trick */
+  var L=h.brain.lobes;
+  o+='<g><path d="M206 212 q8 30 2 52" stroke="#4E7381" stroke-width="12" fill="none" stroke-linecap="round"/>'+L.map(function(e){return '<ellipse cx="'+e[0]+'" cy="'+e[1]+'" rx="'+e[2]+'" ry="'+e[3]+'" fill="none" stroke="#4E7381" stroke-width="5"/>';}).join('')
+    +L.map(function(e){return '<ellipse cx="'+e[0]+'" cy="'+e[1]+'" rx="'+e[2]+'" ry="'+e[3]+'" fill="#143742"/>';}).join('')
+    +'</g>';
+  o+='<g id="nn-e" stroke-width="1.1">'+net.E.map(function(e,i){var a=net.N[e[0]],b=net.N[e[1]];return '<line id="nne'+i+'" x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'" stroke="#3A6878"/>';}).join('')+'</g>';
+  o+='<g id="nn-n">'+net.N.map(function(p,i){return '<circle id="nnn'+i+'" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.4" fill="#9DB3BB"/>';}).join('')+'</g>';
+  o+='<g id="nn-s" filter="url(#glow)"></g>';
+  /* connectors */
+  o+='<path d="M312 140 H346" stroke="#D9853F" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arr)" fill="none"/>';
+  o+='<path d="M1022 245 H1110" stroke="#D9853F" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arr)" fill="none"/>';
+  /* PWM */
+  var p=h.pwm;
+  o+='<g fill="none" stroke-linecap="round"><line x1="'+p.x0+'" y1="'+p.TOP+'" x2="'+p.x1+'" y2="'+p.TOP+'" stroke="#2A4A56" stroke-dasharray="2 6"/>'
+    +'<line x1="'+p.x0+'" y1="'+p.LO+'" x2="'+p.x1+'" y2="'+p.LO+'" stroke="#2A4A56" stroke-dasharray="2 6"/>'
+    +'<path id="carrier" stroke="#4E7381" stroke-width="1.2"/><path id="ref" stroke="#D9853F" stroke-width="2.4"/><path id="pulse" stroke="#CFDCDF" stroke-width="1.8"/></g>';
+  /* motor: stator (ring with 12 slots + coils) */
+  var cx=m.cx,cy=m.cy,sl=12,pc=['#D9853F','#6FB3C8','#D8E1E3'];
+  function P(r,a){a=(a-90)*Math.PI/180;return (cx+r*Math.cos(a)).toFixed(2)+' '+(cy+r*Math.sin(a)).toFixed(2);}
+  function arc(r1,r2,a0,a1){return 'M'+P(r2,a0)+' A'+r2+' '+r2+' 0 0 1 '+P(r2,a1)+' L'+P(r1,a1)+' A'+r1+' '+r1+' 0 0 0 '+P(r1,a0)+'Z';}
+  o+='<circle cx="'+cx+'" cy="'+cy+'" r="'+((m.Ro+m.Ri)/2)+'" fill="none" stroke="#2E5968" stroke-width="'+(m.Ro-m.Ri)+'"/>';
+  o+='<circle cx="'+cx+'" cy="'+cy+'" r="'+m.Ro+'" fill="none" stroke="#5A8594" stroke-width="1.4"/><circle cx="'+cx+'" cy="'+cy+'" r="'+m.Ri+'" fill="none" stroke="#5A8594" stroke-width="1"/>';
+  for(var k=0;k<sl;k++){var ac=k*30+15;
+    o+='<path d="'+arc(m.Ri-0.5,m.Ri+24,ac-7.5,ac+7.5)+'" fill="#0E2630"/>';
+    o+='<path id="wd'+k+'" d="'+arc(m.Ri+5,m.Ri+22,ac-5.6,ac+5.6)+'" fill="'+pc[k%3]+'" opacity=".5"/>';}
+  /* rotor with surface-mounted magnets (4 poles) */
+  o+='<g id="rotor"><circle cx="'+cx+'" cy="'+cy+'" r="'+m.Rr+'" fill="url(#rotg)" stroke="#5A8594" stroke-width="1.2"/>';
+  for(var q=0;q<4;q++){var a0=q*90,Nn=q%2===0;
+    o+='<path d="'+arc(m.Rr-13,m.Rr+1,a0-34,a0+34)+'" fill="'+(Nn?'#C4692C':'#3F8499')+'"/>';
+    var tp=P(m.Rr-26,a0).split(' ');
+    o+='<text x="'+tp[0]+'" y="'+(+tp[1]+4)+'" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="600" fill="'+(Nn?'#F2B27A':'#9FD0DE')+'">'+(Nn?'N':'S')+'</text>';}
+  o+='<circle cx="'+cx+'" cy="'+cy+'" r="14" fill="#9DB3BB"/><rect x="'+(cx-3)+'" y="'+(cy-14)+'" width="6" height="7" fill="#173845"/></g>';
+  o+='</svg>';
+  return o;
+}
 function startPWM(){
-  var W=1200,N=600,CY=2,MF=15,TOP=90,AMP=62,HI=200,LO=268;
+  var h=HERO,p=h.pwm,net=brainNet(),m=h.motor;
   var refEl=document.getElementById('ref'),carEl=document.getElementById('carrier'),pulEl=document.getElementById('pulse');if(!refEl)return;
   if(pwmRAF){cancelAnimationFrame(pwmRAF);pwmRAF=null;}
-  function tri(p){p=p-Math.floor(p);return 1-4*Math.abs(p-0.5);}
-  function draw(ph){var r=[],c=[],p=[],prev=null;
-    for(var i=0;i<=N;i++){var x=i*W/N,u=i/N,rf=0.88*Math.sin(2*Math.PI*CY*u+ph),cr=tri(CY*MF*u);
-      r.push((i?'L':'M')+x.toFixed(1)+' '+(TOP-AMP*rf).toFixed(1));c.push((i?'L':'M')+x.toFixed(1)+' '+(TOP-AMP*cr).toFixed(1));
-      var s=rf>cr?HI:LO;if(prev===null)p.push('M'+x.toFixed(1)+' '+s);else if(s!==prev)p.push('L'+x.toFixed(1)+' '+prev,'L'+x.toFixed(1)+' '+s);else p.push('L'+x.toFixed(1)+' '+s);prev=s;}
-    refEl.setAttribute('d',r.join(' '));carEl.setAttribute('d',c.join(' '));pulEl.setAttribute('d',p.join(' '));}
-  draw(0);if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  var ph=0,last=0;(function frame(t){if(t-last>33){ph+=0.024;draw(ph);last=t;}pwmRAF=requestAnimationFrame(frame);})(0);
+  var W=p.x1-p.x0,NS=520,rot=document.getElementById('rotor'),sg=document.getElementById('nn-s');
+  var nodes=net.N.map(function(_,i){return document.getElementById('nnn'+i);}),edges=net.E.map(function(_,i){return document.getElementById('nne'+i);}),wd=[];
+  for(var k=0;k<12;k++)wd.push(document.getElementById('wd'+k));
+  function tri(x){x=x-Math.floor(x);return 1-4*Math.abs(x-0.5);}
+  var spikes=[],hot={};
+  function draw(ph,t){
+    var r=[],c=[],q=[],prev=null;
+    for(var i=0;i<=NS;i++){var x=p.x0+i*W/NS,u=i/NS,rf=0.86*Math.sin(2*Math.PI*p.CY*u+ph),cr=tri(p.CY*p.MF*u);
+      r.push((i?'L':'M')+x.toFixed(1)+' '+(p.TOP-p.AMP*rf).toFixed(1));c.push((i?'L':'M')+x.toFixed(1)+' '+(p.TOP-p.AMP*cr).toFixed(1));
+      var sv=rf>cr?p.HI:p.LO;if(prev===null)q.push('M'+x.toFixed(1)+' '+sv);else if(sv!==prev)q.push('L'+x.toFixed(1)+' '+prev,'L'+x.toFixed(1)+' '+sv);else q.push('L'+x.toFixed(1)+' '+sv);prev=sv;}
+    refEl.setAttribute('d',r.join(' '));carEl.setAttribute('d',c.join(' '));pulEl.setAttribute('d',q.join(' '));
+    /* motor: mechanical angle, 2 pole pairs */
+    var thm=ph*1.6,the=2*thm;
+    if(rot)rot.setAttribute('transform','rotate('+(thm*180/Math.PI).toFixed(2)+' '+m.cx+' '+m.cy+')');
+    for(var k=0;k<12;k++){var slotAng=(k*30+15)*Math.PI/180,phs=k%3;var cur=Math.cos(the-phs*2*Math.PI/3-2*slotAng*0);wd[k].setAttribute('opacity',(0.25+0.75*Math.abs(cur)).toFixed(2));}
+    /* brain twinkle */
+    var ts=t/1000;
+    for(var n=0;n<nodes.length;n++){var v=Math.pow(Math.max(0,Math.sin(ts*net.rate[n]+net.phase[n])),8);
+      nodes[n].setAttribute('r',(3.2+2.6*v).toFixed(2));nodes[n].setAttribute('fill',v>0.35?'#F2B27A':'#9DB3BB');}
+    if(Math.random()<0.18&&spikes.length<7){var ei=Math.floor(Math.random()*edges.length),dir=Math.random()<.5;spikes.push({e:ei,t0:ts,dir:dir});}
+    var html='';spikes=spikes.filter(function(s){var k=(ts-s.t0)/0.55;if(k>1){edges[s.e].setAttribute('stroke','#3A6878');return false;}
+      var e=net.E[s.e],A=net.N[s.dir?e[0]:e[1]],B=net.N[s.dir?e[1]:e[0]];edges[s.e].setAttribute('stroke','#B8612A');
+      html+='<circle cx="'+(A[0]+(B[0]-A[0])*k).toFixed(1)+'" cy="'+(A[1]+(B[1]-A[1])*k).toFixed(1)+'" r="3" fill="#FFD3A8"/>';return true;});
+    sg.innerHTML=html;
+  }
+  draw(0,0);if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var ph=0,last=0;(function frame(t){if(t-last>33){ph+=0.02;draw(ph,t);last=t;}pwmRAF=requestAnimationFrame(frame);})(0);
 }
 
 document.documentElement.lang=LANG;
