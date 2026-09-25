@@ -333,7 +333,7 @@ body.admin .adm-field{display:block}
 </div>
 
 <!-- =====================================================================
-     사이트 내용(데이터). 관리자 모드(주소 끝에 #admin 또는 Ctrl+Shift+A)에서
+     사이트 내용(데이터). 관리자 모드(교수님이 정해 둔 관리자 주소로 접속)에서
      화면으로 고치는 것이 가장 쉽습니다. 이 부분을 직접 고칠 때는 JSON 문법
      (쉼표, 따옴표)을 지켜 주세요.
      ===================================================================== -->
@@ -1837,7 +1837,7 @@ function renderAll(){
 /* ---------- routing ---------- */
 function route(){
   var h=(location.hash||'#home').slice(1);
-  if(h==='admin'){setAdmin(true);return;}
+  if(keyHash(decodeURIComponent(h))==='1m9rqcf'){setAdmin(true);return;}
   if(h==='join'){PAGE='members';renderAll();setTimeout(function(){var j=document.querySelector('#p-members #join');if(j)j.scrollIntoView();},30);return;}
   PAGE=PAGES.indexOf(h)>=0?h:'home';
   renderAll();window.scrollTo(0,0);
@@ -1891,10 +1891,10 @@ document.getElementById('btn-load').addEventListener('click',function(){var inp=
   inp.onchange=function(){var f=inp.files&&inp.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{DATA=JSON.parse(rd.result);dirty();renderAll();alert('백업을 불러왔습니다.');}catch(e){alert('JSON 파일을 읽지 못했습니다: '+e.message);}};rd.readAsText(f);};inp.click();});
 document.getElementById('btn-exit').addEventListener('click',function(){if(DIRTY&&!confirm('저장하지 않은 변경이 있습니다. 그래도 종료할까요?'))return;setAdmin(false);});
 function setAdmin(on){ADMIN=on;document.body.classList.toggle('admin',on);
-  if(location.hash==='#admin')history.replaceState(null,'','#'+PAGE);
+  if(on)history.replaceState(null,'','#'+PAGE);
   renderAll();}
 window.addEventListener('beforeunload',function(e){if(DIRTY){e.preventDefault();e.returnValue='';}});
-document.addEventListener('keydown',function(e){if(e.ctrlKey&&e.shiftKey&&(e.key==='A'||e.key==='a')){e.preventDefault();setAdmin(!ADMIN);}});
+function keyHash(s){var x=2166136261;for(var i=0;i<s.length;i++){x^=s.charCodeAt(i);x=Math.imul(x,16777619)>>>0;}return x.toString(36);}
 
 /* ---------- PWM animation ---------- */
 /* ---------- hero animation: AI (brain) -> CBPWM -> motor ---------- */
