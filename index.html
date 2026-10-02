@@ -281,6 +281,24 @@ body.admin{padding-bottom:90px}
 .adminbar button{font:inherit;font-size:13px;padding:8px 13px;border-radius:3px;cursor:pointer;border:1px solid #3C4348;background:#272C30;color:#E8EBEC}
 .adminbar button:hover{background:#333A3F}
 .adminbar button.primary{background:var(--copper);border-color:var(--copper);color:#fff}
+.adminbar button:disabled{opacity:.55;cursor:wait}
+.admlink{font:inherit;font-size:12px;background:none;border:1px solid #2F4B55;color:#7E98A1;padding:3px 9px;border-radius:2px;cursor:pointer}
+.admlink:hover{color:#fff;border-color:#7E98A1}
+body.admin .admlink{display:none}
+.modal{position:fixed;inset:0;z-index:300;background:rgba(6,18,23,.62);display:flex;align-items:center;justify-content:center;padding:16px}
+.modal[hidden]{display:none}
+.modal .box{background:#fff;color:var(--ink);width:min(440px,100%);border-radius:4px;padding:24px 24px 20px;box-shadow:0 18px 48px rgba(0,0,0,.3)}
+.modal h3{font-size:18px}
+.modal p{font-size:13.5px;color:var(--ink-50);margin-top:6px;line-height:1.6}
+.modal label{display:block;font-size:12.5px;color:var(--ink-70);margin-top:14px;font-weight:600}
+.modal input{display:block;width:100%;font:inherit;font-size:15px;padding:9px 11px;border:1px solid #C9C8C0;border-radius:3px;margin-top:5px}
+.modal input:focus{outline:2px solid var(--copper);outline-offset:0;border-color:var(--copper)}
+.modal .err{color:#B33A3A;font-size:13px;margin-top:10px;min-height:1em}
+.modal .row{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+.modal .row button{font:inherit;font-size:14px;padding:9px 16px;border-radius:3px;cursor:pointer;border:1px solid #C9C8C0;background:#fff}
+.modal .row button.primary{background:var(--deep);border-color:var(--deep);color:#fff;font-weight:600}
+.modal .row button:disabled{opacity:.6;cursor:wait}
+.modal .link{font-size:12.5px;color:var(--copper);background:none;border:0;padding:0;cursor:pointer;margin-top:12px;text-decoration:underline}
 #dirty{color:#F0B78A}
 body.admin .ed{outline:1px dashed rgba(184,97,42,.6);outline-offset:3px;border-radius:2px;min-width:2em;display:inline-block;cursor:text}
 body.admin .ed:hover{background:rgba(184,97,42,.1)}
@@ -331,12 +349,32 @@ body.admin .adm-field{display:block}
 
 <div class="adminbar">
   <span class="tag">ADMIN</span>
-  <span class="hint">점선 글자를 클릭해 수정 · ↑↓✕ 순서/삭제 · <b>+</b> 새 항목. 메뉴를 옮겨 다니며 고친 뒤 <b>저장</b>하고, 받은 index.html로 GitHub 저장소의 파일을 교체하세요. <span id="dirty"></span></span>
-  <button type="button" id="btn-save" class="primary">저장 (index.html 내려받기)</button>
+  <span class="hint">점선 글자를 클릭해 수정 · ↑↓✕ 순서/삭제 · <b>+</b> 새 항목. 메뉴를 옮겨 다니며 고친 뒤 <b>저장 및 게시</b>를 누르면 1~2분 뒤 사이트에 반영됩니다. <span id="dirty"></span></span>
+  <button type="button" id="btn-publish" class="primary">저장 및 게시</button>
+  <button type="button" id="btn-save">파일로 내려받기</button>
   <button type="button" id="btn-json">데이터 백업(.json)</button>
   <button type="button" id="btn-load">백업 불러오기</button>
+  <button type="button" id="btn-reset">비밀번호·키 재설정</button>
   <button type="button" id="btn-exit">편집 종료</button>
 </div>
+
+<div class="modal" id="m-login" hidden><form class="box" id="f-login" autocomplete="off">
+  <h3>관리자 로그인</h3>
+  <p>관리자 비밀번호를 입력하세요.</p>
+  <label for="l-pw">비밀번호</label><input type="password" id="l-pw" autocomplete="current-password">
+  <div class="err" id="l-err"></div>
+  <div class="row"><button type="button" data-close>취소</button><button type="submit" class="primary" id="l-go">로그인</button></div>
+</form></div>
+
+<div class="modal" id="m-setup" hidden><form class="box" id="f-setup" autocomplete="off">
+  <h3>관리자 초기 설정</h3>
+  <p>처음 한 번만 필요합니다. GitHub에서 만든 이 저장소 전용 접근 키(토큰)와, 앞으로 쓸 관리자 비밀번호를 입력하세요. 키는 이 비밀번호로 암호화되어 저장됩니다.</p>
+  <label for="s-tok">GitHub 접근 키 (github_pat_…)</label><input type="password" id="s-tok" autocomplete="off" spellcheck="false">
+  <label for="s-pw">새 관리자 비밀번호 (10자 이상)</label><input type="password" id="s-pw" autocomplete="new-password">
+  <label for="s-pw2">비밀번호 확인</label><input type="password" id="s-pw2" autocomplete="new-password">
+  <div class="err" id="s-err"></div>
+  <div class="row"><button type="button" data-close>취소</button><button type="submit" class="primary" id="s-go">설정 후 게시</button></div>
+</form></div>
 
 <!-- =====================================================================
      사이트 내용(데이터). 관리자 모드(교수님이 정해 둔 관리자 주소로 접속)에서
@@ -1884,7 +1922,7 @@ function renderContact(){
    +'<div class="block"><div class="wrap"><div class="contact-grid"><div><div class="facts">'+f+'</div>'+ADD('contact.facts','fact','항목 추가')+'</div><div><div class="mapbox">'+map+'</div>'+ed+'</div></div></div></div>';
 }
 function renderFooter(){
-  document.getElementById('footer-body').innerHTML='<span><b>'+esc(DATA.brand.name)+'</b> · '+esc(DATA.home.en_name)+'</span><span>'+T('footer.line')+'</span><span>'+S('footer.copyright')+'</span>';
+  document.getElementById('footer-body').innerHTML='<span><b>'+esc(DATA.brand.name)+'</b> · '+esc(DATA.home.en_name)+'</span><span>'+T('footer.line')+'</span><span>'+S('footer.copyright')+' &nbsp;<button type="button" class="admlink" id="adm-open">관리자</button></span>';
 }
 
 var RENDER={home:renderHome,news:renderNews,research:renderResearch,professor:renderProfessor,members:renderMembers,publications:renderPubs,lecture:renderLecture,contact:renderContact};
@@ -1901,7 +1939,6 @@ function renderAll(){
 /* ---------- routing ---------- */
 function route(){
   var h=(location.hash||'#home').slice(1);
-  if(keyHash(decodeURIComponent(h))==='1m9rqcf'){setAdmin(true);return;}
   if(h==='join'){PAGE='members';renderAll();setTimeout(function(){var j=document.querySelector('#p-members #join');if(j)j.scrollIntoView();},30);return;}
   PAGE=PAGES.indexOf(h)>=0?h:'home';
   renderAll();window.scrollTo(0,0);
@@ -1949,16 +1986,82 @@ document.getElementById('langbtn').addEventListener('click',function(){LANG=ko()
 function download(text,name,mime){var b=new Blob([text],{type:mime+';charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);}
 function buildHTML(){var json=JSON.stringify(DATA,null,1).replace(/</g,'\\u003c');
   return '<!DOCTYPE html>\n'+TEMPLATE.replace(/(<script type="application\/json" id="site-data">)[\s\S]*?(<\/script>)/,function(m,a,b){return a+'\n'+json+'\n'+b;});}
-document.getElementById('btn-save').addEventListener('click',function(){download(buildHTML(),'index.html','text/html');clean();alert('index.html 을 내려받았습니다.\nGitHub 저장소에서 Add file → Upload files 로 같은 이름의 index.html 을 올리고 Commit 하면 1~2분 뒤 사이트에 반영됩니다.');});
+document.getElementById('btn-save').addEventListener('click',function(){download(buildHTML(),'index.html','text/html');});
 document.getElementById('btn-json').addEventListener('click',function(){var d=new Date().toISOString().slice(0,10).replace(/-/g,'');download(JSON.stringify(DATA,null,1),'speedlab-backup-'+d+'.json','application/json');});
 document.getElementById('btn-load').addEventListener('click',function(){var inp=document.createElement('input');inp.type='file';inp.accept='.json,application/json';
   inp.onchange=function(){var f=inp.files&&inp.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{DATA=JSON.parse(rd.result);dirty();renderAll();alert('백업을 불러왔습니다.');}catch(e){alert('JSON 파일을 읽지 못했습니다: '+e.message);}};rd.readAsText(f);};inp.click();});
 document.getElementById('btn-exit').addEventListener('click',function(){if(DIRTY&&!confirm('저장하지 않은 변경이 있습니다. 그래도 종료할까요?'))return;setAdmin(false);});
-function setAdmin(on){ADMIN=on;document.body.classList.toggle('admin',on);
+function setAdmin(on){ADMIN=on;if(!on)TOKEN=null;document.body.classList.toggle('admin',on);
   if(on)history.replaceState(null,'','#'+PAGE);
   renderAll();}
+/* ---------- admin login + GitHub publish ---------- */
+var REPO='jjhyung/SPEED', BRANCH='main', TOKEN=null;
+var TE=new TextEncoder(), TD=new TextDecoder();
+function b64e(u8){var s='',C=0x8000;for(var i=0;i<u8.length;i+=C)s+=String.fromCharCode.apply(null,u8.subarray(i,i+C));return btoa(s);}
+function b64d(s){var b=atob(s),u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u;}
+function hasCrypto(){return !!(window.crypto&&crypto.subtle);}
+async function pwKey(pw,salt,iter){var base=await crypto.subtle.importKey('raw',TE.encode(pw),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:iter,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);}
+async function sealToken(tok,pw){var salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),iter=600000;
+  var k=await pwKey(pw,salt,iter);var ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv:iv},k,TE.encode(tok)));
+  return {v:1,iter:iter,salt:b64e(salt),iv:b64e(iv),ct:b64e(ct)};}
+async function openToken(pw){var a=DATA.auth;var k=await pwKey(pw,b64d(a.salt),a.iter);
+  return TD.decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b64d(a.iv)},k,b64d(a.ct)));}
+function ghHeaders(tok){return {'Authorization':'Bearer '+tok,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};}
+async function ghCheck(tok){var r=await fetch('https://api.github.com/repos/'+REPO,{headers:ghHeaders(tok),cache:'no-store'});
+  if(r.status===401)throw new Error('접근 키가 올바르지 않거나 만료되었습니다.');
+  if(!r.ok)throw new Error('저장소에 접근할 수 없습니다 ('+r.status+'). 키의 저장소 선택을 확인하세요.');
+  var j=await r.json();if(j.permissions&&j.permissions.push===false)throw new Error('이 키에는 쓰기 권한이 없습니다. Contents 권한을 Read and write로 설정하세요.');}
+async function ghPublish(tok,html,msg){
+  var api='https://api.github.com/repos/'+REPO+'/contents/index.html';
+  var cur=await fetch(api+'?ref='+BRANCH+'&t='+Date.now(),{headers:ghHeaders(tok),cache:'no-store'});
+  if(cur.status===401)throw new Error('접근 키가 만료되었거나 폐기되었습니다. [비밀번호·키 재설정]으로 새 키를 등록하세요.');
+  if(!cur.ok)throw new Error('현재 파일을 읽지 못했습니다 ('+cur.status+').');
+  var sha=(await cur.json()).sha;
+  var r=await fetch(api,{method:'PUT',headers:ghHeaders(tok),body:JSON.stringify({message:msg||'Update site content via admin',content:b64e(TE.encode(html)),sha:sha,branch:BRANCH})});
+  if(r.status===409)throw new Error('그 사이에 다른 곳에서 사이트가 수정되었습니다. 페이지를 새로고침한 뒤 다시 수정하세요.');
+  if(r.status===403||r.status===404)throw new Error('쓰기 권한이 없습니다 ('+r.status+'). 키의 Contents 권한을 확인하세요.');
+  if(!r.ok)throw new Error('게시 실패 ('+r.status+').');
+}
+function modal(id,on){var m=document.getElementById(id);m.hidden=!on;if(on){var f=m.querySelector('input');if(f)setTimeout(function(){f.focus();},30);}else{m.querySelectorAll('input').forEach(function(i){i.value='';});m.querySelector('.err').textContent='';}}
+document.querySelectorAll('.modal [data-close]').forEach(function(b){b.addEventListener('click',function(){modal(b.closest('.modal').id,false);});});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){modal('m-login',false);modal('m-setup',false);}});
+document.addEventListener('click',function(e){if(e.target&&e.target.id==='adm-open'){
+  if(!hasCrypto()){alert('이 브라우저에서는 관리자 모드를 쓸 수 없습니다. https 주소의 사이트에서 열어 주세요.');return;}
+  modal(DATA.auth?'m-login':'m-setup',true);}});
+document.getElementById('f-login').addEventListener('submit',async function(e){e.preventDefault();
+  var pw=document.getElementById('l-pw').value,err=document.getElementById('l-err'),btn=document.getElementById('l-go');
+  if(!pw){err.textContent='비밀번호를 입력하세요.';return;}
+  btn.disabled=true;err.textContent='확인 중…';
+  try{TOKEN=await openToken(pw);modal('m-login',false);setAdmin(true);}
+  catch(x){err.textContent='비밀번호가 맞지 않습니다.';}
+  btn.disabled=false;});
+document.getElementById('f-setup').addEventListener('submit',async function(e){e.preventDefault();
+  var tok=document.getElementById('s-tok').value.trim(),pw=document.getElementById('s-pw').value,pw2=document.getElementById('s-pw2').value;
+  var err=document.getElementById('s-err'),btn=document.getElementById('s-go');
+  if(!tok){err.textContent='GitHub 접근 키를 입력하세요.';return;}
+  if(pw.length<10){err.textContent='비밀번호는 10자 이상으로 정해 주세요.';return;}
+  if(pw!==pw2){err.textContent='비밀번호 확인이 일치하지 않습니다.';return;}
+  btn.disabled=true;err.textContent='키 확인 중…';
+  try{await ghCheck(tok);err.textContent='암호화하고 게시하는 중…';
+    var prev=DATA.auth;DATA.auth=await sealToken(tok,pw);
+    try{await ghPublish(tok,buildHTML(),'Set up admin access');}catch(x){DATA.auth=prev;throw x;}
+    TOKEN=tok;clean();modal('m-setup',false);setAdmin(true);
+    alert('설정이 끝났습니다. 앞으로는 사이트 맨 아래 [관리자] 버튼과 이 비밀번호로 들어오시면 됩니다.');}
+  catch(x){err.textContent=x.message;}
+  btn.disabled=false;});
+document.getElementById('btn-publish').addEventListener('click',async function(){
+  if(!TOKEN){alert('로그인 정보가 없습니다. 편집을 종료하고 다시 로그인하세요.');return;}
+  var b=this;b.disabled=true;b.textContent='게시 중…';
+  try{await ghPublish(TOKEN,buildHTML());clean();alert('게시했습니다. 1~2분 뒤 사이트에 반영됩니다.\n바로 안 보이면 잠시 후 Ctrl+F5로 새로고침하세요.');}
+  catch(x){alert('게시하지 못했습니다.\n'+x.message+'\n\n수정한 내용을 잃지 않도록 [파일로 내려받기]나 [데이터 백업]을 해 두세요.');}
+  b.disabled=false;b.textContent='저장 및 게시';});
+document.getElementById('btn-reset').addEventListener('click',function(){
+  if(!confirm('GitHub 접근 키와 관리자 비밀번호를 새로 등록할까요?\n(키가 만료되었거나 비밀번호를 바꾸고 싶을 때 사용합니다)'))return;
+  modal('m-setup',true);});
+
 window.addEventListener('beforeunload',function(e){if(DIRTY){e.preventDefault();e.returnValue='';}});
-function keyHash(s){var x=2166136261;for(var i=0;i<s.length;i++){x^=s.charCodeAt(i);x=Math.imul(x,16777619)>>>0;}return x.toString(36);}
+
 
 /* ---------- PWM animation ---------- */
 /* ---------- hero animation: AI (brain) -> CBPWM -> motor ---------- */
