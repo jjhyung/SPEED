@@ -198,6 +198,12 @@ nav.main a.on{color:#fff;border-bottom-color:var(--copper-lt)}
 @media(min-width:640px){.news li{grid-template-columns:130px 1fr}}
 .news .date{font-family:var(--mono);font-size:12.5px;color:var(--copper);padding-top:3px}
 .news .t{font-weight:700;font-size:16.5px}
+.news .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:#fff;background:var(--copper);padding:2px 6px;border-radius:2px;margin-right:8px;vertical-align:2px;font-weight:500}
+.join-grid{display:grid;gap:12px;grid-template-columns:1fr;margin-top:24px;max-width:980px}
+@media(min-width:820px){.join-grid{grid-template-columns:repeat(3,1fr)}}
+.join-card{border:1px solid var(--line-dark);background:rgba(255,255,255,.04);padding:16px 18px;position:relative}
+.join-card b{display:block;color:#fff;font-size:15.5px}
+.join-card>span:not(.ctl){display:block;color:#B9C8CC;font-size:14px;margin-top:6px;line-height:1.65}
 .news .b{font-size:14.5px;color:var(--ink-70);margin-top:4px}
 .news.compact .b{display:none}
 .more{display:inline-block;margin-top:16px;font-size:14px;font-weight:600;color:var(--copper);text-decoration:none}
@@ -908,7 +914,7 @@ body.admin .adm-field{display:block}
   },
   "grants": [
    {
-    "period": "2026. 10. – 2027. 09.",
+    "period": "2026. 10. 01. – 2027. 09.",
     "title": {
      "ko": "인공지능 기반 전동기 드라이브 시스템 연구",
      "en": "AI-based Motor Drive Systems"
@@ -1117,18 +1123,41 @@ body.admin .adm-field{display:block}
   },
   "items": [
    {
-    "date": "2026. 09.",
+    "date": "2026. 10. 02.",
+    "tag": {
+     "ko": "NEW",
+     "en": "NEW"
+    },
+    "title": {
+     "ko": "학부연구생 모집 — Edge AI (On-device AI) · MCU",
+     "en": "Undergraduate researchers wanted — Edge AI (on-device AI) and MCUs"
+    },
+    "body": {
+     "ko": "MCU에 AI 모델을 올려 실시간으로 동작시키는 Edge AI(On-device AI)를 직접 경험해 볼 학부연구생을 모집합니다.\n· 3학년: Edge AI·MCU 활용 경험을 쌓고 싶은 학생 (마이크로프로세서, 전력전자 과목 이수자에게 적합)\n· 2학년: MCU 활용에 큰 관심이 있는 학생\n지원: 간단한 자기소개와 성적표를 jh.jung@pknu.ac.kr 로 보내 주세요. 연구실(가온관 502호) 방문 상담도 환영합니다.",
+     "en": "We are recruiting undergraduate researchers to gain hands-on experience with Edge AI (on-device AI): running AI models in real time on microcontrollers (MCUs).\n· 3rd-year students who want Edge-AI and MCU experience (suited to those who have taken Microprocessors and Power Electronics)\n· 2nd-year students with a strong interest in MCUs\nTo apply, email a short introduction and your transcript to jh.jung@pknu.ac.kr. Visits to the office (Gaon Hall 502) are welcome."
+    }
+   },
+   {
+    "date": "2026. 10. 01.",
+    "tag": {
+     "ko": "",
+     "en": ""
+    },
     "title": {
      "ko": "신임교수 학술연구개발비 과제 선정",
      "en": "New faculty research grant awarded"
     },
     "body": {
-     "ko": "「인공지능 기반 전동기 드라이브 시스템 연구」가 국립부경대학교 신임교수 학술연구개발비 과제로 선정되었습니다. (2026. 10. – 2027. 09.)",
-     "en": "“AI-based Motor Drive Systems” was selected for the PKNU new faculty research grant (Oct 2026 – Sep 2027)."
+     "ko": "「인공지능 기반 전동기 드라이브 시스템 연구」가 2026년 10월 1일 국립부경대학교 신임교수 학술연구개발비 과제로 선정되어 연구를 시작했습니다. (2026. 10. 01. – 2027. 09.)",
+     "en": "“AI-based Motor Drive Systems” was selected for the PKNU new faculty research grant on 1 October 2026, and the project started the same day (Oct 2026 – Sep 2027)."
     }
    },
    {
     "date": "2026. 09. 01.",
+    "tag": {
+     "ko": "",
+     "en": ""
+    },
     "title": {
      "ko": "SPEED Lab 개설",
      "en": "SPEED Lab opened"
@@ -1520,6 +1549,38 @@ body.admin .adm-field{display:block}
    "ko": "SPEED Lab은 2026년에 시작한 연구실입니다. 장비를 고르고 실험 벤치를 세우고 첫 논문을 쓰는 과정에 처음부터 함께하게 됩니다. 회로를 직접 만들어 보는 것을 즐기고, 시뮬레이션과 실측이 다를 때 그 이유를 끝까지 따라가는 학생을 찾습니다. 이력서와 성적증명서를 첨부해 이메일로 연락 주세요. 연구실 방문은 언제든 환영합니다.",
    "en": "SPEED Lab started in 2026. You would help choose the instruments, build the bench and write the first papers from day one. We look for students who enjoy building real circuits and chase down why simulation and measurement disagree. Email your CV and transcript; visitors are always welcome."
   },
+  "items": [
+   {
+    "t": {
+     "ko": "학부연구생 · 3학년",
+     "en": "Undergraduate · 3rd year"
+    },
+    "s": {
+     "ko": "Edge AI(On-device AI)·MCU 활용 경험을 쌓고 싶은 학생. 마이크로프로세서, 전력전자 과목 이수자에게 적합합니다.",
+     "en": "Students who want hands-on Edge-AI (on-device AI) and MCU experience. Suited to those who have taken Microprocessors and Power Electronics."
+    }
+   },
+   {
+    "t": {
+     "ko": "학부연구생 · 2학년",
+     "en": "Undergraduate · 2nd year"
+    },
+    "s": {
+     "ko": "MCU 활용에 큰 관심이 있는 학생.",
+     "en": "Students with a strong interest in working with MCUs."
+    }
+   },
+   {
+    "t": {
+     "ko": "대학원생 (석사·박사)",
+     "en": "Graduate students (M.S. / Ph.D.)"
+    },
+    "s": {
+     "ko": "전동기 드라이브, 전력반도체 신뢰성, 대용량 전력변환, 전력·에너지 시스템용 AI를 연구할 학생.",
+     "en": "Students who want to research motor drives, power-semiconductor reliability, high-power conversion and AI for power and energy systems."
+    }
+   }
+  ],
   "btn": {
    "ko": "교수에게 이메일 보내기",
    "en": "Email the Professor"
@@ -1642,7 +1703,8 @@ var TPL = {
   tl:function(){return {period:"YYYY. MM.",title:bl("제목","Title"),org:bl("기관","Organization"),detail:bl("","")};},
   member:function(){return {photo:"",name:bl("홍길동","Gil-Dong Hong"),role:bl("석사과정","M.S. Student"),email:"",bio:bl("연구 주제","Research topic")};},
   group:function(){return {label:bl("새 그룹","New group"),members:[]};},
-  news:function(){var d=new Date();return {date:d.getFullYear()+'. '+String(d.getMonth()+1).padStart(2,'0')+'.',title:bl("소식 제목","News title"),body:bl("내용","Body")};},
+  news:function(){var d=new Date();return {date:d.getFullYear()+'. '+String(d.getMonth()+1).padStart(2,'0')+'.',tag:bl("NEW","NEW"),title:bl("소식 제목","News title"),body:bl("내용","Body")};},
+  joinitem:function(){return {t:bl("모집 대상","Who"),s:bl("설명","Description")};},
   pub:function(){return {text:"Authors, “Title,” Journal, vol. 0, no. 0, pp. 0–0, 2027.",url:""};},
   year:function(){return {year:String(new Date().getFullYear()),items:[]};},
   term:function(){return {label:bl("2027학년도 2학기","Fall 2027"),status:bl("개설 예정","Planned"),courses:[]};},
@@ -1668,7 +1730,7 @@ function areaCards(){
 }
 function newsList(items,base,compact){
   return '<ul class="news'+(compact?' compact':'')+'">'+items.map(function(x,i){var b=base+'.'+i;
-    return '<li><span class="date">'+S(b+'.date')+'</span><span><span class="t">'+T(b+'.title')+'</span><div class="b">'+T(b+'.body')+'</div></span>'+(compact?'':CTL(base,i))+'</li>';}).join('')+'</ul>';
+    return '<li><span class="date">'+S(b+'.date')+'</span><span>'+((x.tag&&L(x.tag))||ADMIN?'<span class="tag">'+T(b+'.tag')+'</span>':'')+'<span class="t">'+T(b+'.title')+'</span><div class="b">'+T(b+'.body')+'</div></span>'+(compact?'':CTL(base,i))+'</li>';}).join('')+'</ul>';
 }
 
 function renderHome(){
@@ -1808,7 +1870,9 @@ function renderLecture(){
 }
 
 function joinBlock(){
+  var it=(DATA.join.items||[]).map(function(x,i){var b='join.items.'+i;return '<div class="join-card"><b>'+T(b+'.t')+'</b><span>'+T(b+'.s')+'</span>'+CTL('join.items',i)+'</div>';}).join('');
   return '<div class="join block" id="join"><div class="wrap"><h2>'+T('join.heading')+'</h2><p class="lede">'+T('join.lede')+'</p>'
+   +(it?'<div class="join-grid">'+it+'</div>':'')+ADD('join.items','joinitem','모집 대상 추가')
    +'<a class="btn"'+href('mailto:'+DATA.professor.email+'?subject=[SPEED Lab] ')+'>'+T('join.btn')+' →</a></div></div>';
 }
 
