@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="ko"><script src="chrome-extension://dncepekefegjiljlfbihljgogephdhph/contentscript.js"></script><script type="text/javascript" src="chrome-extension://fjnbnpbmkenffdnngjfgmeleoegfcffe/static/js/contentInt.js"></script><head>
+<html lang="ko">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SPEED Lab | 지능형 전력전자 연구실 · PKNU</title>
 <meta name="author" content="Prof. Jun-Hyung Jung">
-<meta name="description" content="지능형 전력전자 연구실 (Smart Power Electronics &amp; Electric Drives Laboratory, SPEED Lab), 국립부경대학교 제어계측공학전공">
+<meta name="description" content="지능형 전력전자 연구실 (Smart Power Electronics & Electric Drives Laboratory, SPEED Lab), 국립부경대학교 제어계측공학전공">
 <meta name="keywords" content="SPEED Lab, 지능형 전력전자 연구실, 정준형, Jun-Hyung Jung, 국립부경대학교, PKNU, 전력전자, 전동기 드라이브, Power Electronics, Motor Drives, Multilevel Converter, Reinforcement Learning">
 <meta property="og:title" content="SPEED Lab | PKNU">
-<meta property="og:description" content="Smart Power Electronics &amp; Electric Drives Laboratory · 지능형 전력전자 연구실">
+<meta property="og:description" content="Smart Power Electronics & Electric Drives Laboratory · 지능형 전력전자 연구실">
 <meta property="og:type" content="website">
 <meta property="og:image" content="images/research_overview.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2312303C'/%3E%3Cpath d='M4 22h5V10h5v12h5V10h5v12h4' fill='none' stroke='%23D9853F' stroke-width='2.4'/%3E%3C/svg%3E">
+<script data-goatcounter="https://speedlab.goatcounter.com/count" data-goatcounter-settings='{"no_onload":true}' async src="//gc.zgo.at/count.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#F3F2EE; --paper-2:#E9E8E2; --card:#FFFFFF; --ink:#15191C; --ink-70:#3A4248; --ink-50:#626A70;
@@ -327,7 +329,7 @@ body.admin .adm-field{display:block}
 <header class="bar">
   <div class="bar-in">
     <a class="brand" href="#home" aria-label="SPEED Lab home">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="4" fill="#1C4553"></rect><path d="M4 22h5V10h5v12h5V10h5v12h4" fill="none" stroke="#D9853F" stroke-width="2.4"></path></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="4" fill="#1C4553"/><path d="M4 22h5V10h5v12h5V10h5v12h4" fill="none" stroke="#D9853F" stroke-width="2.4"/></svg>
       <b id="brand-name">SPEED Lab</b><span id="brand-affil">PKNU</span></a>
     <nav class="main" id="nav" aria-label="Main"></nav>
     <button class="langbtn" id="langbtn" type="button">EN</button>
@@ -353,26 +355,27 @@ body.admin .adm-field{display:block}
   <button type="button" id="btn-save">파일로 내려받기</button>
   <button type="button" id="btn-json">데이터 백업(.json)</button>
   <button type="button" id="btn-load">백업 불러오기</button>
+  <button type="button" id="btn-stats">방문자 현황</button>
   <button type="button" id="btn-reset">비밀번호·키 재설정</button>
   <button type="button" id="btn-exit">편집 종료</button>
 </div>
 
-<div class="modal" id="m-login" hidden=""><form class="box" id="f-login" autocomplete="off">
+<div class="modal" id="m-login" hidden><form class="box" id="f-login" autocomplete="off">
   <h3>관리자 로그인</h3>
   <p>관리자 비밀번호를 입력하세요.</p>
   <label for="l-pw">비밀번호</label><input type="password" id="l-pw" autocomplete="current-password">
   <div class="err" id="l-err"></div>
-  <div class="row"><button type="button" data-close="">취소</button><button type="submit" class="primary" id="l-go">로그인</button></div>
+  <div class="row"><button type="button" data-close>취소</button><button type="submit" class="primary" id="l-go">로그인</button></div>
 </form></div>
 
-<div class="modal" id="m-setup" hidden=""><form class="box" id="f-setup" autocomplete="off">
+<div class="modal" id="m-setup" hidden><form class="box" id="f-setup" autocomplete="off">
   <h3>관리자 초기 설정</h3>
   <p>처음 한 번만 필요합니다. GitHub에서 만든 이 저장소 전용 접근 키(토큰)와, 앞으로 쓸 관리자 비밀번호를 입력하세요. 키는 이 비밀번호로 암호화되어 저장됩니다.</p>
   <label for="s-tok">GitHub 접근 키 (github_pat_…)</label><input type="password" id="s-tok" autocomplete="off" spellcheck="false">
   <label for="s-pw">새 관리자 비밀번호 (10자 이상)</label><input type="password" id="s-pw" autocomplete="new-password">
   <label for="s-pw2">비밀번호 확인</label><input type="password" id="s-pw2" autocomplete="new-password">
   <div class="err" id="s-err"></div>
-  <div class="row"><button type="button" data-close="">취소</button><button type="submit" class="primary" id="s-go">설정 후 게시</button></div>
+  <div class="row"><button type="button" data-close>취소</button><button type="submit" class="primary" id="s-go">설정 후 게시</button></div>
 </form></div>
 
 <!-- =====================================================================
@@ -1935,11 +1938,23 @@ function renderAll(){
 /* ---------- routing ---------- */
 function route(){
   var h=(location.hash||'#home').slice(1);
-  if(h==='join'){PAGE='members';renderAll();setTimeout(function(){var j=document.querySelector('#p-members #join');if(j)j.scrollIntoView();},30);return;}
+  if(h==='join'){PAGE='members';renderAll();trackPage();setTimeout(function(){var j=document.querySelector('#p-members #join');if(j)j.scrollIntoView();},30);return;}
   PAGE=PAGES.indexOf(h)>=0?h:'home';
-  renderAll();window.scrollTo(0,0);
+  renderAll();window.scrollTo(0,0);trackPage();
 }
 window.addEventListener('hashchange',route);
+
+/* ---------- visitor statistics (GoatCounter) ---------- */
+var GC_URL='https://speedlab.goatcounter.com', GC_PENDING=null, GC_LAST=null;
+function gcSkip(){try{return localStorage.getItem('skipgc')==='t';}catch(e){return false;}}
+function trackPage(){
+  if(ADMIN||gcSkip())return;
+  var path=location.pathname.replace(/index\.html$/,'')+(PAGE==='home'?'':PAGE);
+  if(path===GC_LAST)return;
+  if(window.goatcounter&&window.goatcounter.count){GC_LAST=path;try{window.goatcounter.count({path:path,title:document.title});}catch(e){}}
+  else GC_PENDING=path;
+}
+window.addEventListener('load',function(){if(GC_PENDING){var p=GC_PENDING;GC_PENDING=null;trackPage();}});
 
 /* ---------- events ---------- */
 document.addEventListener('input',function(ev){var el=ev.target;
@@ -2029,7 +2044,7 @@ document.getElementById('f-login').addEventListener('submit',async function(e){e
   var pw=document.getElementById('l-pw').value,err=document.getElementById('l-err'),btn=document.getElementById('l-go');
   if(!pw){err.textContent='비밀번호를 입력하세요.';return;}
   btn.disabled=true;err.textContent='확인 중…';
-  try{TOKEN=await openToken(pw);modal('m-login',false);setAdmin(true);}
+  try{TOKEN=await openToken(pw);modal('m-login',false);try{localStorage.setItem('skipgc','t');}catch(_){}setAdmin(true);}
   catch(x){err.textContent='비밀번호가 맞지 않습니다.';}
   btn.disabled=false;});
 document.getElementById('f-setup').addEventListener('submit',async function(e){e.preventDefault();
@@ -2042,7 +2057,7 @@ document.getElementById('f-setup').addEventListener('submit',async function(e){e
   try{await ghCheck(tok);err.textContent='암호화하고 게시하는 중…';
     var prev=DATA.auth;DATA.auth=await sealToken(tok,pw);
     try{await ghPublish(tok,buildHTML(),'Set up admin access');}catch(x){DATA.auth=prev;throw x;}
-    TOKEN=tok;clean();modal('m-setup',false);setAdmin(true);
+    TOKEN=tok;clean();modal('m-setup',false);try{localStorage.setItem('skipgc','t');}catch(_){}setAdmin(true);
     alert('설정이 끝났습니다. 앞으로는 사이트 맨 아래 [관리자] 버튼과 이 비밀번호로 들어오시면 됩니다.');}
   catch(x){err.textContent=x.message;}
   btn.disabled=false;});
@@ -2052,6 +2067,7 @@ document.getElementById('btn-publish').addEventListener('click',async function()
   try{await ghPublish(TOKEN,buildHTML());clean();alert('게시했습니다. 1~2분 뒤 사이트에 반영됩니다.\n바로 안 보이면 잠시 후 Ctrl+F5로 새로고침하세요.');}
   catch(x){alert('게시하지 못했습니다.\n'+x.message+'\n\n수정한 내용을 잃지 않도록 [파일로 내려받기]나 [데이터 백업]을 해 두세요.');}
   b.disabled=false;b.textContent='저장 및 게시';});
+document.getElementById('btn-stats').addEventListener('click',function(){window.open(GC_URL,'_blank','noopener');});
 document.getElementById('btn-reset').addEventListener('click',function(){
   if(!confirm('GitHub 접근 키와 관리자 비밀번호를 새로 등록할까요?\n(키가 만료되었거나 비밀번호를 바꾸고 싶을 때 사용합니다)'))return;
   modal('m-setup',true);});
@@ -2154,4 +2170,6 @@ function startPWM(){
 
 document.documentElement.lang=LANG;
 route();
-</script></body></html>
+</script>
+</body>
+</html>
